@@ -1,194 +1,108 @@
-# CivicFlow
+
+
+# 🚀 **CivicFlow – Smart Campus Issue Reporting System**
 
 **by Team Catalyst**
 
-🔗 **Repository**: [https://github.com/divy-mevada/civicFlow_demo](https://github.com/divy-mevada/civicFlow_demo)
+🔗 **Live Demo:** *[https://civic-flow067.vercel.app](https://civic-flow067.vercel.app/)* <br>
+📁 **Youtube:** [Youtube link](https://youtu.be/wmmmIoTqy0A)
 
-A campus-restricted issue reporting web application built with React, Tailwind CSS, and Firebase.
+---
 
-## Features
+## 🔑 ** Login Credentials or Use your own for students**
 
-- 🔐 **Secure Authentication**: Email/password authentication with mandatory email verification
-- 🎓 **Campus-Restricted**: Only campus email addresses can sign up
-- 👨‍🎓 **Student Dashboard**: Report issues, track status, view your complaints
-- 👨‍💼 **Admin Dashboard**: View all issues, update status, filter by block/category/status, analytics
-- 📸 **Image Upload**: Upload images with issue reports
-- 🎨 **Glassmorphism UI**: Beautiful blue-purple gradient design with glassmorphism effects
-- 📱 **Fully Responsive**: Works on all devices
-- ⚡ **Real-time Updates**: Firestore real-time listeners for instant updates
+| Role        | Email                                                     | Password |
+| ----------- | --------------------------------------------------------- | -------- |
+| **Admin**   | [24bce288@nirmauni.ac.in](mailto:24bce288@nirmauni.ac.in) | 123456   |
+| **Student** | [24bce282@nirmauni.ac.in](mailto:24bce282@nirmauni.ac.in) | Divy1234 |
 
-## Tech Stack
+> ⚠️ *Use these accounts to explore both dashboards.*
 
-- **Frontend**: React 18 + Vite
-- **Styling**: Tailwind CSS
-- **Backend**: Firebase (Authentication, Firestore, Storage)
-- **Routing**: React Router DOM
-- **UI Design**: Glassmorphism with blue-purple gradient
+---
 
-## Getting Started
+## 🧩 **What is CivicFlow?**
 
-### Prerequisites
+CivicFlow is a campus-focused issue reporting platform where students can submit complaints (with images & location) and administrators can manage, track, and resolve them in real-time.
+It centralizes campus maintenance, improves transparency, and ensures accountability between students and authorities.
 
-- Node.js 18+ and npm
-- Firebase account
+---
 
-### Installation
+Here’s an expanded list with more impactful points while keeping the existing style and tone:
 
-1. Clone the repository:
-```bash
-git clone <your-repo-url>
-cd CivicFlow
-```
+---
 
-2. Install dependencies:
-```bash
-npm install
-```
+## ✨ **Core Features**
 
-3. Set up Firebase (see [FIREBASE_SETUP.md](./FIREBASE_SETUP.md)):
-   - Create Firebase project
-   - Enable Authentication (Email/Password)
-   - Create Firestore database
-   - Enable Storage
-   - Get Firebase configuration
+* 🔐 Campus email-only signups + email verification
+* 🎓 Student dashboard to submit, view & track issues
+* 🛠️ Admin dashboard to manage, filter, prioritize & resolve issues (Reported → In Progress → Resolved)
+* 📍 Block-based location tagging for accurate issue mapping
+* 🖼️ Image upload support for clear visual evidence
+* 📊 Basic analytics & issue insights for admins
+* ⚡ Real-time updates synced via Firestore
+* 🪟 Glassmorphism UI with modern responsive interface
+* 🧭 Role-based access control (Student / Admin)
+* 🚫 Restricted access to unauthorized users with security rules
+* 🔁 Issue timeline/history to maintain transparency
+* 📨 Automated status feedback for students after updates
+* 🧹 Reporting categories for maintenance, WiFi, water, hostel, security & more
+* 📱 Mobile-friendly interface for quick reporting on the go
+* 🔄 Scalable structure for expansion to other universities/campuses
 
-4. Configure Firebase:
-   - Open `src/firebase/config.js`
-   - Replace placeholder values with your Firebase config
+---
 
-5. Configure campus email domain:
-   - Open `src/firebase/auth.js`
-   - Update `CAMPUS_EMAIL_DOMAIN` constant
+## 🛠️ **Tech Stack**
 
-6. Deploy Firestore and Storage rules:
-   - Copy `firestore.rules` to Firebase Console > Firestore > Rules
-   - Copy `storage.rules` to Firebase Console > Storage > Rules
+| Area       | Tools Used                              |
+| ---------- | --------------------------------------- |
+| Frontend   | React + Vite + Tailwind CSS             |
+| Backend    | Firebase (Auth, Firestore, Storage)     |
+| Storage    | Firebase Storage / Supabase  |
+| Deployment | Firebase Hosting                        |
 
-7. Run the development server:
-```bash
-npm run dev
-```
 
-8. Open [http://localhost:5173](http://localhost:5173) in your browser
 
-## Project Structure
+## 🧭 **User Roles**
+
+| Role    | Permissions                                       |
+| ------- | ------------------------------------------------- |
+| Student | Report issues, upload photos, track status        |
+| Admin   | View all issues, update status, filter, analytics |
+
+---
+
+## 📂 **Project Structure**
 
 ```
 CivicFlow/
 ├── src/
-│   ├── components/          # Reusable components
-│   │   ├── GlassCard.jsx
-│   │   └── ProtectedRoute.jsx
-│   ├── context/             # React Context
-│   │   └── AuthContext.jsx
-│   ├── firebase/           # Firebase configuration
-│   │   ├── config.js
-│   │   ├── auth.js
-│   │   ├── firestore.js
-│   │   └── storage.js
-│   ├── pages/              # Page components
-│   │   ├── Landing.jsx
-│   │   ├── Login.jsx
-│   │   ├── Signup.jsx
-│   │   ├── VerifyEmail.jsx
-│   │   ├── StudentDashboard.jsx
-│   │   └── AdminDashboard.jsx
-│   ├── App.jsx             # Main app component
-│   ├── main.jsx           # Entry point
-│   └── index.css          # Global styles
-├── firestore.rules        # Firestore security rules
-├── storage.rules          # Storage security rules
-├── firebase.json          # Firebase configuration
-├── FIREBASE_SETUP.md      # Firebase setup guide
-└── DEPLOYMENT.md          # Deployment guide
+│   ├── components/       # Reusable UI components
+│   ├── context/          # Authentication context
+│   ├── firebase/         # Auth, Firestore, Storage configs
+│   ├── pages/            # Views (Login, Signup, Dashboards)
+│   ├── App.jsx           # Main routing
+│   └── index.css         # Global styles
+├── firestore.rules
+├── storage.rules
+└── firebase.json
 ```
-
-## User Roles
-
-### Student
-- Sign up with campus email
-- Verify email
-- Report issues with images
-- View only their own issues
-- Track issue status
-
-### Admin
-- All student features
-- View all issues
-- Filter issues by block, category, status
-- Update issue status
-- View analytics (total issues, pending, most problematic block)
-
-## Issue Categories
-
-- Water
-- Electricity
-- WiFi
-- Cleanliness
-- Infrastructure
-
-## Blocks
-
-- Block A
-- Block B
-- Block C
-- Hostel
-- Library
-- Academic Block
-
-## Issue Status Flow
-
-1. **Reported** - Issue has been submitted
-2. **In Progress** - Issue is being worked on
-3. **Resolved** - Issue has been fixed
-
-## Security
-
-- Email verification required before accessing dashboards
-- Campus email domain restriction
-- Firestore security rules enforce data access
-- Storage rules restrict file uploads
-- Only authenticated and verified users can access the app
-
-## Deployment
-
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions to Firebase Hosting.
-
-Quick deploy:
-```bash
-npm run build
-firebase deploy --only hosting
-```
-
-## Configuration
-
-### Campus Email Domain
-
-Edit `src/firebase/auth.js`:
-```javascript
-export const CAMPUS_EMAIL_DOMAIN = '@yourcampus.edu';
-```
-
-### Firebase Config
-
-Edit `src/firebase/config.js` with your Firebase project credentials.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## License
-
-This project is created for hackathon purposes.
-
-## Support
-
-For issues and questions, please open an issue on GitHub.
 
 ---
 
-**Built with ❤️ by Team Catalyst**
+## 🔒 Security Highlights
+
+* Campus domain restriction
+* Email verification required
+* Protected routes & dashboard access
+* Firestore read/write access rules
+* Verified user-only uploads
+
+---
+
+
+## ❤️ Team Credits
+
+**Built with passion by Team Catalyst**
+For feedback or demo queries — contact team members directly.
+
 
