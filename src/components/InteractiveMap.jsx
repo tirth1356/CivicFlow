@@ -490,7 +490,7 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
                     </div>
                   </motion.div>
                 );
-              })}}}
+              })}
           </div>
 
           {/* View Full Image Button */}
