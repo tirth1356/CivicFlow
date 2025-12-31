@@ -676,8 +676,8 @@ const Home = () => {
 
           <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
             <p>
-              © 2024 CivicFlow. All rights reserved. | Designed for educational
-              institutions worldwide
+              © 2025 CivicFlow  | Designed for educational
+              institutions worldwide 
             </p>
           </div>
         </div>
