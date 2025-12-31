@@ -671,14 +671,6 @@ const Home = () => {
                 <span className="text-gray-500">•</span>
                 <span className="text-gray-300">Kushal Vanjara</span>
               </div>
-              <div className="flex justify-center lg:justify-end space-x-4">
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Privacy
-                </a>
-              </div>
             </div>
           </div>
 

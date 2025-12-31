@@ -500,17 +500,13 @@ const AdminDashboard = () => {
         </div>
 
         {/* Issues Management */}
-        <div className={`backdrop-blur-sm rounded-2xl border p-6 mb-6 ${
-          isDark 
-            ? "bg-gradient-to-br from-gray-900/60 to-gray-800/30 border-gray-800/50" 
-            : "bg-white border-gray-200 shadow-sm"
-        }`}>
+        <div className="backdrop-blur-sm rounded-2xl border p-6 mb-6 bg-gradient-to-br from-gray-900/60 to-gray-800/30 border-gray-800/50">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
-              <h2 className={`text-2xl font-bold mb-1 ${isDark ? "text-white" : "text-gray-900"}`}>
+              <h2 className="text-2xl font-bold mb-1 text-white">
                 Issues Management
               </h2>
-              <p className={isDark ? "text-gray-400" : "text-gray-600"}>Manage all reported campus issues</p>
+              <p className="text-gray-400">Manage all reported campus issues</p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
@@ -522,11 +518,7 @@ const AdminDashboard = () => {
                   placeholder="Search issues, users..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className={`pl-12 pr-4 py-3 rounded-xl focus:outline-none focus:ring-2 transition-all duration-300 w-full text-base border ${
-                    isDark 
-                      ? "bg-gray-800/30 border-gray-700/50 text-white placeholder-gray-500 focus:border-blue-500/50 focus:ring-blue-500/10" 
-                      : "bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500/20"
-                  }`}
+                  className="pl-12 pr-4 py-3 rounded-xl focus:outline-none focus:ring-2 transition-all duration-300 w-full text-base border bg-gray-800/30 border-gray-700/50 text-white placeholder-gray-500 focus:border-blue-500/50 focus:ring-blue-500/10"
                 />
               </div>
 
@@ -535,22 +527,18 @@ const AdminDashboard = () => {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className={`pl-4 pr-10 py-3 rounded-xl focus:outline-none focus:ring-2 transition-all duration-300 appearance-none w-full border ${
-                    isDark 
-                      ? "bg-gray-800/30 border-gray-700/50 text-white focus:border-blue-500/50 focus:ring-blue-500/10" 
-                      : "bg-gray-50 border-gray-200 text-gray-900 focus:border-blue-500 focus:ring-blue-500/20"
-                  }`}
+                  className="pl-4 pr-10 py-3 rounded-xl focus:outline-none focus:ring-2 transition-all duration-300 appearance-none w-full border bg-gray-800/30 border-gray-700/50 text-white focus:border-blue-500/50 focus:ring-blue-500/10"
                 >
-                  <option value="latest" className={isDark ? "bg-gray-800" : "bg-white"}>
+                  <option value="latest" className="bg-gray-800">
                     Latest First
                   </option>
-                  <option value="oldest" className={isDark ? "bg-gray-800" : "bg-white"}>
+                  <option value="oldest" className="bg-gray-800">
                     Oldest First
                   </option>
-                  <option value="status" className={isDark ? "bg-gray-800" : "bg-white"}>
+                  <option value="status" className="bg-gray-800">
                     By Status
                   </option>
-                  <option value="priority" className={isDark ? "bg-gray-800" : "bg-white"}>
+                  <option value="priority" className="bg-gray-800">
                     By Priority
                   </option>
                 </select>
@@ -570,47 +558,47 @@ const AdminDashboard = () => {
             ].map((filter) => {
               const isActive = activeFilter === filter;
               let label = filter.charAt(0).toUpperCase() + filter.slice(1);
-              let bgColor = isDark ? "bg-gray-800/30" : "bg-gray-100";
-              let textColor = isDark ? "text-gray-400" : "text-gray-600";
-              let borderColor = isDark ? "border-gray-700/50" : "border-gray-200";
+              let bgColor = "bg-gray-800/30";
+              let textColor = "text-gray-400";
+              let borderColor = "border-gray-700/50";
               let Icon = null;
 
               if (filter === "all") {
                 label = "All Issues";
                 if (isActive) {
-                  bgColor = isDark ? "bg-blue-500/10" : "bg-blue-50";
-                  textColor = isDark ? "text-blue-400" : "text-blue-600";
-                  borderColor = isDark ? "border-blue-500/20" : "border-blue-200";
+                  bgColor = "bg-blue-500/10";
+                  textColor = "text-blue-400";
+                  borderColor = "border-blue-500/20";
                 }
               } else if (filter === "pending") {
                 label = "Pending";
                 if (isActive) {
-                  bgColor = isDark ? "bg-yellow-500/10" : "bg-yellow-50";
-                  textColor = isDark ? "text-yellow-400" : "text-yellow-600";
-                  borderColor = isDark ? "border-yellow-500/20" : "border-yellow-200";
+                  bgColor = "bg-yellow-500/10";
+                  textColor = "text-yellow-400";
+                  borderColor = "border-yellow-500/20";
                 }
               } else if (filter === "resolved") {
                 label = "Resolved";
                 if (isActive) {
-                  bgColor = isDark ? "bg-green-500/10" : "bg-green-50";
-                  textColor = isDark ? "text-green-400" : "text-green-600";
-                  borderColor = isDark ? "border-green-500/20" : "border-green-200";
+                  bgColor = "bg-green-500/10";
+                  textColor = "text-green-400";
+                  borderColor = "border-green-500/20";
                 }
               } else if (filter === "urgent") {
                 label = "Urgent";
                 if (isActive) {
-                  bgColor = isDark ? "bg-red-500/10" : "bg-red-50";
-                  textColor = isDark ? "text-red-400" : "text-red-600";
-                  borderColor = isDark ? "border-red-500/20" : "border-red-200";
+                  bgColor = "bg-red-500/10";
+                  textColor = "text-red-400";
+                  borderColor = "border-red-500/20";
                 }
               } else {
                 const category = categories.find((c) => c.value === filter);
                 if (category) {
                   Icon = category.icon;
                   if (isActive) {
-                    bgColor = isDark ? category.bgColor : "bg-gray-100"; // You might want specific light colors for categories
-                    textColor = isDark ? category.color : "text-gray-900";
-                    borderColor = isDark ? category.borderColor : "border-gray-200";
+                    bgColor = category.bgColor;
+                    textColor = category.color;
+                    borderColor = category.borderColor;
                   }
                 }
               }
@@ -632,49 +620,49 @@ const AdminDashboard = () => {
           {loading ? (
             <div className="p-12 text-center">
               <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className={isDark ? "text-gray-400" : "text-gray-600"}>Loading issues...</p>
+              <p className="text-gray-400">Loading issues...</p>
             </div>
           ) : sortedIssues.length === 0 ? (
             <div className="p-12 text-center">
-              <AlertCircle className={`w-16 h-16 mx-auto mb-4 ${isDark ? "text-gray-600" : "text-gray-400"}`} />
-              <h3 className={`text-xl font-semibold mb-2 ${isDark ? "text-white" : "text-gray-900"}`}>
+              <AlertCircle className="w-16 h-16 mx-auto mb-4 text-gray-600" />
+              <h3 className="text-xl font-semibold mb-2 text-white">
                 No issues found
               </h3>
-              <p className={isDark ? "text-gray-400" : "text-gray-600"}>
+              <p className="text-gray-400">
                 {searchQuery || activeFilter !== "all"
                   ? "No issues match your search criteria"
                   : "No issues have been reported yet"}
               </p>
             </div>
           ) : (
-            <div className={`overflow-x-auto rounded-xl border ${isDark ? "border-gray-800/50" : "border-gray-200"}`}>
+            <div className="overflow-x-auto rounded-xl border border-gray-800/50">
               <table className="w-full">
-                <thead className={`border-b ${isDark ? "bg-gray-900/50 border-gray-800/50" : "bg-gray-50 border-gray-200"}`}>
+                <thead className="border-b bg-gray-900/50 border-gray-800/50">
                   <tr>
-                    <th className={`py-4 px-6 text-left text-sm font-medium ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+                    <th className="py-4 px-6 text-left text-sm font-medium text-gray-400">
                       Issue Details
                     </th>
-                    <th className={`py-4 px-6 text-left text-sm font-medium ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+                    <th className="py-4 px-6 text-left text-sm font-medium text-gray-400">
                       Category
                     </th>
-                    <th className={`py-4 px-6 text-left text-sm font-medium ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+                    <th className="py-4 px-6 text-left text-sm font-medium text-gray-400">
                       Location
                     </th>
-                    <th className={`py-4 px-6 text-left text-sm font-medium ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+                    <th className="py-4 px-6 text-left text-sm font-medium text-gray-400">
                       Reporter
                     </th>
-                    <th className={`py-4 px-6 text-left text-sm font-medium ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+                    <th className="py-4 px-6 text-left text-sm font-medium text-gray-400">
                       Status
                     </th>
-                    <th className={`py-4 px-6 text-left text-sm font-medium ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+                    <th className="py-4 px-6 text-left text-sm font-medium text-gray-400">
                       Date
                     </th>
-                    <th className={`py-4 px-6 text-left text-sm font-medium ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+                    <th className="py-4 px-6 text-left text-sm font-medium text-gray-400">
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className={`divide-y ${isDark ? "divide-gray-800/50" : "divide-gray-200"}`}>
+                <tbody className="divide-y divide-gray-800/50">
                   {sortedIssues.map((issue) => {
                     const statusConfig = getStatusConfig(issue.status);
                     const StatusIcon = statusConfig.icon;
@@ -683,7 +671,7 @@ const AdminDashboard = () => {
                     return (
                       <tr
                         key={issue.id}
-                        className={`transition-colors ${isDark ? "hover:bg-gray-900/30" : "hover:bg-gray-50"}`}
+                        className="transition-colors hover:bg-gray-900/30"
                       >
                         <td className="py-4 px-6">
                           <div className="flex items-start space-x-4">
@@ -704,10 +692,10 @@ const AdminDashboard = () => {
                               </div>
                             )}
                             <div className="flex-1 min-w-0">
-                              <h3 className={`text-sm font-medium mb-1 truncate ${isDark ? "text-white" : "text-gray-900"}`}>
+                              <h3 className="text-sm font-medium mb-1 truncate text-white">
                                 {issue.title}
                               </h3>
-                              <p className={`text-xs line-clamp-2 ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+                              <p className="text-xs line-clamp-2 text-gray-400">
                                 {issue.description}
                               </p>
                             </div>
@@ -715,18 +703,18 @@ const AdminDashboard = () => {
                         </td>
                         <td className="py-4 px-6">
                           <div className="flex items-center space-x-2">
-                            <CategoryIcon className={`w-4 h-4 ${isDark ? "text-gray-400" : "text-gray-500"}`} />
-                            <span className={`text-sm ${isDark ? "text-gray-300" : "text-gray-700"}`}>
+                            <CategoryIcon className="w-4 h-4 text-gray-400" />
+                            <span className="text-sm text-gray-300">
                               {issue.category}
                             </span>
                           </div>
                         </td>
                         <td className="py-4 px-6">
                           <div className="space-y-1">
-                            <div className={`text-sm ${isDark ? "text-white" : "text-gray-900"}`}>
+                            <div className="text-sm text-white">
                               {issue.block}
                             </div>
-                            <div className={`text-xs ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+                            <div className="text-xs text-gray-400">
                               {issue.floor &&
                                 issue.floor !== "Not specified" && (
                                   <span className="mr-2">{issue.floor}</span>
@@ -739,11 +727,11 @@ const AdminDashboard = () => {
                         </td>
                         <td className="py-4 px-6">
                           <div className="space-y-1">
-                            <div className={`text-sm truncate max-w-[150px] ${isDark ? "text-white" : "text-gray-900"}`}>
+                            <div className="text-sm truncate max-w-[150px] text-white">
                               {issue.reportedByEmail?.split("@")[0] ||
                                 "Anonymous"}
                             </div>
-                            <div className={`text-xs truncate max-w-[150px] ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+                            <div className="text-xs truncate max-w-[150px] text-gray-400">
                               {issue.reportedByEmail}
                             </div>
                           </div>
@@ -758,10 +746,10 @@ const AdminDashboard = () => {
                         </td>
                         <td className="py-4 px-6">
                           <div className="space-y-1">
-                            <div className={`text-sm ${isDark ? "text-gray-300" : "text-gray-700"}`}>
+                            <div className="text-sm text-gray-300">
                               {formatDate(issue.createdAt)}
                             </div>
-                            <div className={`text-xs ${isDark ? "text-gray-500" : "text-gray-500"}`}>
+                            <div className="text-xs text-gray-500">
                               {getTimeAgo(issue.createdAt)}
                             </div>
                           </div>
@@ -770,14 +758,14 @@ const AdminDashboard = () => {
                           <div className="flex items-center space-x-2">
                             <button
                               onClick={() => setSelectedIssue(issue)}
-                              className={`p-2 rounded-lg transition-colors ${isDark ? "hover:bg-gray-800/50" : "hover:bg-gray-100"}`}
+                              className="p-2 rounded-lg transition-colors hover:bg-gray-800/50"
                               title="Update Status"
                             >
                               <Edit className="w-4 h-4 text-blue-400" />
                             </button>
                             <button
                               onClick={() => handleDeleteIssue(issue.id)}
-                              className={`p-2 rounded-lg transition-colors ${isDark ? "hover:bg-gray-800/50" : "hover:bg-gray-100"}`}
+                              className="p-2 rounded-lg transition-colors hover:bg-gray-800/50"
                               title="Delete Issue"
                             >
                               <Trash2 className="w-4 h-4 text-red-400" />
@@ -809,16 +797,12 @@ const AdminDashboard = () => {
               <motion.div
                 initial={{ scale: 0.9, y: 20 }}
                 animate={{ scale: 1, y: 0 }}
-                className={`rounded-2xl max-w-md w-full overflow-hidden border ${
-                  isDark 
-                    ? "bg-gradient-to-br from-gray-900 to-gray-800 border-gray-800/50" 
-                    : "bg-white border-gray-200"
-                }`}
+                className="rounded-2xl max-w-md w-full overflow-hidden border bg-gradient-to-br from-gray-900 to-gray-800 border-gray-800/50"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className={`p-6 border-b ${isDark ? "border-gray-800/50" : "border-gray-200"}`}>
+                <div className="p-6 border-b border-gray-800/50">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className={`text-xl font-bold ${isDark ? "text-white" : "text-gray-900"}`}>
+                    <h3 className="text-xl font-bold text-white">
                       Update Issue Status
                     </h3>
                     <button
@@ -826,45 +810,41 @@ const AdminDashboard = () => {
                         setSelectedIssue(null);
                         setStatusUpdate("");
                       }}
-                      className={`p-2 rounded-lg transition-colors ${isDark ? "hover:bg-gray-800/50" : "hover:bg-gray-100"}`}
+                      className="p-2 rounded-lg transition-colors hover:bg-gray-800/50"
                     >
                       <X className="w-5 h-5 text-gray-400" />
                     </button>
                   </div>
 
                   <div className="mb-6">
-                    <h4 className={`text-lg font-medium mb-2 ${isDark ? "text-white" : "text-gray-900"}`}>
+                    <h4 className="text-lg font-medium mb-2 text-white">
                       {selectedIssue.title}
                     </h4>
-                    <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+                    <p className="text-sm text-gray-400">
                       {selectedIssue.description}
                     </p>
                   </div>
 
                   <div className="space-y-4">
                     <div>
-                      <label className={`block text-sm font-medium mb-2 ${isDark ? "text-gray-300" : "text-gray-700"}`}>
+                      <label className="block text-sm font-medium mb-2 text-gray-300">
                         Update Status
                       </label>
                       <select
                         value={statusUpdate}
                         onChange={(e) => setStatusUpdate(e.target.value)}
-                        className={`w-full px-4 py-3 rounded-xl focus:outline-none focus:ring-2 transition-all duration-300 border ${
-                          isDark 
-                            ? "bg-gray-800/30 border-gray-700/50 text-white focus:border-blue-500/50 focus:ring-blue-500/10" 
-                            : "bg-gray-50 border-gray-200 text-gray-900 focus:border-blue-500 focus:ring-blue-500/20"
-                        }`}
+                        className="w-full px-4 py-3 rounded-xl focus:outline-none focus:ring-2 transition-all duration-300 border bg-gray-800/30 border-gray-700/50 text-white focus:border-blue-500/50 focus:ring-blue-500/10"
                       >
-                        <option value="" className={isDark ? "bg-gray-800" : "bg-white"}>
+                        <option value="" className="bg-gray-800">
                           Select new status
                         </option>
-                        <option value="Reported" className={isDark ? "bg-gray-800" : "bg-white"}>
+                        <option value="Reported" className="bg-gray-800">
                           Reported
                         </option>
-                        <option value="In Progress" className={isDark ? "bg-gray-800" : "bg-white"}>
+                        <option value="In Progress" className="bg-gray-800">
                           In Progress
                         </option>
-                        <option value="Resolved" className={isDark ? "bg-gray-800" : "bg-white"}>
+                        <option value="Resolved" className="bg-gray-800">
                           Resolved
                         </option>
                       </select>
@@ -876,7 +856,7 @@ const AdminDashboard = () => {
                           setSelectedIssue(null);
                           setStatusUpdate("");
                         }}
-                        className={`px-4 py-2 transition-colors ${isDark ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
+                        className="px-4 py-2 transition-colors text-gray-400 hover:text-white"
                       >
                         Cancel
                       </button>

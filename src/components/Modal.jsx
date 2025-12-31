@@ -1,4 +1,3 @@
-import { useTheme } from '../context/ThemeContext';
 import { X } from 'lucide-react';
 
 const Modal = ({ 
@@ -6,11 +5,10 @@ const Modal = ({
   onClose, 
   title, 
   children, 
+  message,
   type = 'default',
   size = 'md' 
 }) => {
-  const { isDark } = useTheme();
-
   if (!isOpen) return null;
 
   const sizeClasses = {
@@ -21,45 +19,35 @@ const Modal = ({
   };
 
   const typeClasses = {
-    default: isDark ? 'border-gray-800' : 'border-gray-200',
-    success: isDark ? 'border-green-500/20' : 'border-green-200',
-    warning: isDark ? 'border-yellow-500/20' : 'border-yellow-200',
-    danger: isDark ? 'border-red-500/20' : 'border-red-200',
-    info: isDark ? 'border-blue-500/20' : 'border-blue-200'
+    default: 'border-gray-800',
+    success: 'border-green-500/20',
+    warning: 'border-yellow-500/20',
+    danger: 'border-red-500/20',
+    error: 'border-red-500/20',
+    info: 'border-blue-500/20'
   };
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className={`w-full ${sizeClasses[size]} max-h-[90vh] overflow-hidden rounded-2xl border transition-all duration-300 ${
-        isDark 
-          ? 'bg-gray-900' 
-          : 'bg-white'
-      } ${typeClasses[type]}`}>
+      <div className={`w-full ${sizeClasses[size]} max-h-[90vh] overflow-hidden rounded-2xl border bg-gray-900 ${typeClasses[type]}`}>
         {/* Header */}
         {title && (
-          <div className={`flex items-center justify-between p-6 border-b transition-colors duration-300 ${
-            isDark ? 'border-gray-800' : 'border-gray-200'
-          }`}>
-            <h2 className={`text-xl font-bold transition-colors duration-300 ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}>
+          <div className="flex items-center justify-between p-6 border-b border-gray-800">
+            <h2 className="text-xl font-bold text-white">
               {title}
             </h2>
             <button
               onClick={onClose}
-              className={`p-2 rounded-lg transition-colors duration-300 ${
-                isDark ? 'hover:bg-gray-800' : 'hover:bg-gray-100'
-              }`}
+              className="p-2 rounded-lg hover:bg-gray-800"
             >
-              <X className={`w-5 h-5 transition-colors duration-300 ${
-                isDark ? 'text-gray-400' : 'text-gray-500'
-              }`} />
+              <X className="w-5 h-5 text-gray-400" />
             </button>
           </div>
         )}
 
         {/* Content */}
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+          {message && <p className="text-gray-300">{message}</p>}
           {children}
         </div>
       </div>

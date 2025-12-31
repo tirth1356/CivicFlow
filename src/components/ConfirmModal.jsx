@@ -1,4 +1,3 @@
-import { useTheme } from '../context/ThemeContext';
 import { AlertTriangle, X, CheckCircle, Info, AlertCircle } from 'lucide-react';
 
 const ConfirmModal = ({ 
@@ -11,8 +10,6 @@ const ConfirmModal = ({
   cancelText = 'Cancel',
   type = 'default'
 }) => {
-  const { isDark } = useTheme();
-
   if (!isOpen) return null;
 
   const getIcon = () => {
@@ -47,40 +44,26 @@ const ConfirmModal = ({
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className={`w-full max-w-md rounded-2xl border transition-all duration-300 ${
-        isDark 
-          ? 'bg-gray-900 border-gray-800'
-          : 'bg-white border-gray-200'
-      }`}>
+      <div className="w-full max-w-md rounded-2xl border bg-gray-900 border-gray-800">
         {/* Header */}
-        <div className={`flex items-center justify-between p-6 border-b transition-colors duration-300 ${
-          isDark ? 'border-gray-800' : 'border-gray-200'
-        }`}>
+        <div className="flex items-center justify-between p-6 border-b border-gray-800">
           <div className="flex items-center space-x-3">
             {getIcon()}
-            <h2 className={`text-xl font-bold transition-colors duration-300 ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}>
+            <h2 className="text-xl font-bold text-white">
               {title}
             </h2>
           </div>
           <button
             onClick={onClose}
-            className={`p-2 rounded-lg transition-colors duration-300 ${
-              isDark ? 'hover:bg-gray-800' : 'hover:bg-gray-100'
-            }`}
+            className="p-2 rounded-lg hover:bg-gray-800"
           >
-            <X className={`w-5 h-5 transition-colors duration-300 ${
-              isDark ? 'text-gray-400' : 'text-gray-500'
-            }`} />
+            <X className="w-5 h-5 text-gray-400" />
           </button>
         </div>
 
         {/* Content */}
         <div className="p-6">
-          <p className={`mb-6 transition-colors duration-300 ${
-            isDark ? 'text-gray-300' : 'text-gray-700'
-          }`}>
+          <p className="mb-6 text-gray-300">
             {message}
           </p>
 
@@ -88,17 +71,13 @@ const ConfirmModal = ({
           <div className="flex space-x-3">
             <button
               onClick={onClose}
-              className={`flex-1 px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
-                isDark 
-                  ? 'bg-gray-800 hover:bg-gray-700 text-gray-300'
-                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-              }`}
+              className="flex-1 px-4 py-2 rounded-lg font-medium bg-gray-800 hover:bg-gray-700 text-gray-300"
             >
               {cancelText}
             </button>
             <button
               onClick={onConfirm}
-              className={`flex-1 px-4 py-2 rounded-lg font-medium transition-all duration-300 ${getConfirmButtonClass()}`}
+              className={`flex-1 px-4 py-2 rounded-lg font-medium ${getConfirmButtonClass()}`}
             >
               {confirmText}
             </button>
