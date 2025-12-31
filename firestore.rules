@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated and verified
+    function isAuthenticatedAndVerified() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+    
+    // Helper function to check if user is admin (based on email)
+    function isAdmin() {
+      return isAuthenticatedAndVerified() && 
+             request.auth.token.email.matches('.*admin.*');
+    }
+    
+    // Issues collection - simplified rules
+    match /issues/{issueId} {
+      // Allow read if authenticated and verified
+      allow read: if isAuthenticatedAndVerified();
+      
+      // Allow create if authenticated and verified
+      allow create: if isAuthenticatedAndVerified();
+      
+      // Allow update if authenticated and verified
+      allow update: if isAuthenticatedAndVerified();
+      
+      // Only admins can delete issues
+      allow delete: if isAdmin();
+    }
+    
+    // Users collection (optional, for future use)
+    match /users/{userId} {
+      allow read, write: if isAuthenticatedAndVerified() && request.auth.uid == userId;
+    }
+  }
+}

@@ -1,0 +1,72 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper function to check if user is authenticated and verified
+    function isAuthenticatedAndVerified() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+    
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return isAuthenticatedAndVerified() && 
+             request.auth.token.email.matches('.*admin.*');
+    }
+    
+    // Helper function to validate image files
+    function isValidImage() {
+      return resource.contentType.matches('image/.*') &&
+             resource.size < 5 * 1024 * 1024; // 5MB limit
+    }
+    
+    // Issue images - users can upload images for their own issues
+    match /issues/{issueId}/{imageId} {
+      // Allow read for authenticated users
+      allow read: if isAuthenticatedAndVerified();
+      
+      // Allow write for authenticated users (they can upload images for issues)
+      allow write: if isAuthenticatedAndVerified() &&
+                      request.resource.contentType.matches('image/.*') &&
+                      request.resource.size < 5 * 1024 * 1024;
+      
+      // Allow delete for admins only
+      allow delete: if isAdmin();
+    }
+    
+    // Profile images - users can manage their own profile images
+    match /profiles/{userId}/{imageId} {
+      // Allow read for authenticated users
+      allow read: if isAuthenticatedAndVerified();
+      
+      // Allow write for the user themselves or admins
+      allow write: if isAuthenticatedAndVerified() &&
+                      (request.auth.uid == userId || isAdmin()) &&
+                      request.resource.contentType.matches('image/.*') &&
+                      request.resource.size < 2 * 1024 * 1024; // 2MB limit for profiles
+      
+      // Allow delete for the user themselves or admins
+      allow delete: if isAuthenticatedAndVerified() &&
+                       (request.auth.uid == userId || isAdmin());
+    }
+    
+    // Public assets (if any) - read-only for all authenticated users
+    match /public/{allPaths=**} {
+      allow read: if isAuthenticatedAndVerified();
+      allow write: if isAdmin();
+    }
+    
+    // Admin-only uploads
+    match /admin/{allPaths=**} {
+      allow read, write: if isAdmin();
+    }
+    
+    // Temporary uploads - for processing before moving to final location
+    match /temp/{userId}/{allPaths=**} {
+      allow read, write: if isAuthenticatedAndVerified() && 
+                            request.auth.uid == userId;
+      
+      // Auto-delete temp files after 1 hour
+      allow delete: if isAuthenticatedAndVerified();
+    }
+  }
+}
