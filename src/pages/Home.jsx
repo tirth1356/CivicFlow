@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { getAllIssues } from "../firebase/firestore";
 import {
   motion,
   useMotionValue,
@@ -23,6 +24,25 @@ const Home = () => {
   const { currentUser } = useAuth();
   const [hoveredFeature, setHoveredFeature] = useState(null);
   const [activeMapPoint, setActiveMapPoint] = useState(0);
+  const [resolvedCount, setResolvedCount] = useState(0);
+
+  // Fetch resolved issues count
+  useEffect(() => {
+    const unsubscribe = getAllIssues(
+      (snapshot) => {
+        if (!snapshot.empty) {
+          const issues = snapshot.docs.map(doc => doc.data());
+          const resolved = issues.filter(issue => issue.status === "Resolved").length;
+          setResolvedCount(resolved);
+        }
+      },
+      (error) => {
+        console.error("Error fetching issues:", error);
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -455,7 +475,7 @@ const Home = () => {
                 {/* Stats */}
                 <div className="grid grid-cols-3 gap-6 mt-12 max-w-md">
                   {[
-                    { value: "1K+", label: "Issues Resolved" },
+                    { value: resolvedCount > 0 ? `${resolvedCount}` : "0", label: "Issues Resolved" },
                     { value: "24/7", label: "Support" },
                     { value: "99%", label: "Satisfaction" },
                   ].map((stat, i) => (
