@@ -27,16 +27,27 @@ It centralizes campus maintenance, improves transparency, and ensures accountabi
 
 ---
 
+Here’s an expanded list with more impactful points while keeping the existing style and tone:
+
+---
+
 ## ✨ **Core Features**
 
 * 🔐 Campus email-only signups + email verification
-* 🎓 Student dashboard to submit & track issues
-* 🛠️ Admin dashboard to manage, filter, & update status (Reported → In Progress → Resolved)
-* 📍 Block-based location tagging
-* 📸 Image upload support
-* 📊 Basic analytics for admins
-* ⚡ Real-time updates via Firestore
-* 🪟 Glassmorphism UI + responsive design
+* 🎓 Student dashboard to submit, view & track issues
+* 🛠️ Admin dashboard to manage, filter, prioritize & resolve issues (Reported → In Progress → Resolved)
+* 📍 Block-based location tagging for accurate issue mapping
+* 🖼️ Image upload support for clear visual evidence
+* 📊 Basic analytics & issue insights for admins
+* ⚡ Real-time updates synced via Firestore
+* 🪟 Glassmorphism UI with modern responsive interface
+* 🧭 Role-based access control (Student / Admin)
+* 🚫 Restricted access to unauthorized users with security rules
+* 🔁 Issue timeline/history to maintain transparency
+* 📨 Automated status feedback for students after updates
+* 🧹 Reporting categories for maintenance, WiFi, water, hostel, security & more
+* 📱 Mobile-friendly interface for quick reporting on the go
+* 🔄 Scalable structure for expansion to other universities/campuses
 
 ---
 
