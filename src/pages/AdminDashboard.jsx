@@ -362,19 +362,15 @@ const AdminDashboard = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1 }}
-              className={`backdrop-blur-sm rounded-2xl border p-5 ${
-                isDark 
-                  ? "bg-gradient-to-br from-gray-900/50 to-gray-800/30 border-gray-800/50" 
-                  : "bg-white border-gray-200 shadow-sm"
-              }`}
+              className="backdrop-blur-sm rounded-2xl border p-5 bg-gradient-to-br from-gray-900/50 to-gray-800/30 border-gray-800/50"
             >
               <div className="flex items-center space-x-3">
-                <div className={`p-2.5 rounded-xl ${isDark ? "bg-blue-500/10" : "bg-blue-50"}`}>
-                  <FileText className={`w-5 h-5 ${isDark ? "text-blue-400" : "text-blue-600"}`} />
+                <div className="p-2.5 rounded-xl bg-blue-500/10">
+                  <FileText className="w-5 h-5 text-blue-400" />
                 </div>
                 <div>
-                  <p className={`text-2xl font-bold ${isDark ? "text-white" : "text-gray-900"}`}>{stats.total}</p>
-                  <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}>Total Issues</p>
+                  <p className="text-2xl font-bold text-white">{stats.total}</p>
+                  <p className="text-sm text-gray-400">Total Issues</p>
                 </div>
               </div>
             </motion.div>
@@ -383,21 +379,17 @@ const AdminDashboard = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
-              className={`backdrop-blur-sm rounded-2xl border p-5 ${
-                isDark 
-                  ? "bg-gradient-to-br from-gray-900/50 to-gray-800/30 border-gray-800/50" 
-                  : "bg-white border-gray-200 shadow-sm"
-              }`}
+              className="backdrop-blur-sm rounded-2xl border p-5 bg-gradient-to-br from-gray-900/50 to-gray-800/30 border-gray-800/50"
             >
               <div className="flex items-center space-x-3">
-                <div className={`p-2.5 rounded-xl ${isDark ? "bg-yellow-500/10" : "bg-yellow-50"}`}>
-                  <AlertCircle className={`w-5 h-5 ${isDark ? "text-yellow-400" : "text-yellow-600"}`} />
+                <div className="p-2.5 rounded-xl bg-yellow-500/10">
+                  <AlertCircle className="w-5 h-5 text-yellow-400" />
                 </div>
                 <div>
-                  <p className={`text-2xl font-bold ${isDark ? "text-yellow-400" : "text-yellow-600"}`}>
+                  <p className="text-2xl font-bold text-yellow-400">
                     {stats.reported}
                   </p>
-                  <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}>Reported</p>
+                  <p className="text-sm text-gray-400">Reported</p>
                 </div>
               </div>
             </motion.div>
@@ -406,21 +398,17 @@ const AdminDashboard = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3 }}
-              className={`backdrop-blur-sm rounded-2xl border p-5 ${
-                isDark 
-                  ? "bg-gradient-to-br from-gray-900/50 to-gray-800/30 border-gray-800/50" 
-                  : "bg-white border-gray-200 shadow-sm"
-              }`}
+              className="backdrop-blur-sm rounded-2xl border p-5 bg-gradient-to-br from-gray-900/50 to-gray-800/30 border-gray-800/50"
             >
               <div className="flex items-center space-x-3">
-                <div className={`p-2.5 rounded-xl ${isDark ? "bg-blue-500/10" : "bg-blue-50"}`}>
-                  <Clock className={`w-5 h-5 ${isDark ? "text-blue-400" : "text-blue-600"}`} />
+                <div className="p-2.5 rounded-xl bg-blue-500/10">
+                  <Clock className="w-5 h-5 text-blue-400" />
                 </div>
                 <div>
-                  <p className={`text-2xl font-bold ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                  <p className="text-2xl font-bold text-blue-400">
                     {stats.inProgress}
                   </p>
-                  <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}>In Progress</p>
+                  <p className="text-sm text-gray-400">In Progress</p>
                 </div>
               </div>
             </motion.div>
@@ -429,21 +417,17 @@ const AdminDashboard = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.4 }}
-              className={`backdrop-blur-sm rounded-2xl border p-5 ${
-                isDark 
-                  ? "bg-gradient-to-br from-gray-900/50 to-gray-800/30 border-gray-800/50" 
-                  : "bg-white border-gray-200 shadow-sm"
-              }`}
+              className="backdrop-blur-sm rounded-2xl border p-5 bg-gradient-to-br from-gray-900/50 to-gray-800/30 border-gray-800/50"
             >
               <div className="flex items-center space-x-3">
-                <div className={`p-2.5 rounded-xl ${isDark ? "bg-green-500/10" : "bg-green-50"}`}>
-                  <CheckCircle className={`w-5 h-5 ${isDark ? "text-green-400" : "text-green-600"}`} />
+                <div className="p-2.5 rounded-xl bg-green-500/10">
+                  <CheckCircle className="w-5 h-5 text-green-400" />
                 </div>
                 <div>
-                  <p className={`text-2xl font-bold ${isDark ? "text-green-400" : "text-green-600"}`}>
+                  <p className="text-2xl font-bold text-green-400">
                     {stats.resolved}
                   </p>
-                  <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}>Resolved</p>
+                  <p className="text-sm text-gray-400">Resolved</p>
                 </div>
               </div>
             </motion.div>
@@ -452,21 +436,17 @@ const AdminDashboard = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5 }}
-              className={`backdrop-blur-sm rounded-2xl border p-5 ${
-                isDark 
-                  ? "bg-gradient-to-br from-gray-900/50 to-gray-800/30 border-gray-800/50" 
-                  : "bg-white border-gray-200 shadow-sm"
-              }`}
+              className="backdrop-blur-sm rounded-2xl border p-5 bg-gradient-to-br from-gray-900/50 to-gray-800/30 border-gray-800/50"
             >
               <div className="flex items-center space-x-3">
-                <div className={`p-2.5 rounded-xl ${isDark ? "bg-red-500/10" : "bg-red-50"}`}>
-                  <AlertCircle className={`w-5 h-5 ${isDark ? "text-red-400" : "text-red-600"}`} />
+                <div className="p-2.5 rounded-xl bg-red-500/10">
+                  <AlertCircle className="w-5 h-5 text-red-400" />
                 </div>
                 <div>
-                  <p className={`text-2xl font-bold ${isDark ? "text-red-400" : "text-red-600"}`}>
+                  <p className="text-2xl font-bold text-red-400">
                     {stats.urgent}
                   </p>
-                  <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}>Urgent</p>
+                  <p className="text-sm text-gray-400">Urgent</p>
                 </div>
               </div>
             </motion.div>
@@ -475,21 +455,17 @@ const AdminDashboard = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.6 }}
-              className={`backdrop-blur-sm rounded-2xl border p-5 ${
-                isDark 
-                  ? "bg-gradient-to-br from-gray-900/50 to-gray-800/30 border-gray-800/50" 
-                  : "bg-white border-gray-200 shadow-sm"
-              }`}
+              className="backdrop-blur-sm rounded-2xl border p-5 bg-gradient-to-br from-gray-900/50 to-gray-800/30 border-gray-800/50"
             >
               <div className="flex items-center space-x-3">
-                <div className={`p-2.5 rounded-xl ${isDark ? "bg-purple-500/10" : "bg-purple-50"}`}>
-                  <Users className={`w-5 h-5 ${isDark ? "text-purple-400" : "text-purple-600"}`} />
+                <div className="p-2.5 rounded-xl bg-purple-500/10">
+                  <Users className="w-5 h-5 text-purple-400" />
                 </div>
                 <div>
-                  <p className={`text-2xl font-bold ${isDark ? "text-purple-400" : "text-purple-600"}`}>
+                  <p className="text-2xl font-bold text-purple-400">
                     {stats.users}
                   </p>
-                  <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}>Users</p>
+                  <p className="text-sm text-gray-400">Users</p>
                 </div>
               </div>
             </motion.div>
@@ -507,11 +483,7 @@ const AdminDashboard = () => {
 
             <Link
               to="/analytics"
-              className={`flex items-center space-x-2 px-5 py-3 rounded-xl font-medium transition-all duration-300 border ${
-                isDark 
-                  ? "bg-gray-800/50 border-gray-700/50 hover:border-gray-600 text-gray-300 hover:text-white" 
-                  : "bg-white border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-900"
-              }`}
+              className="flex items-center space-x-2 px-5 py-3 rounded-xl font-medium transition-all duration-300 border bg-gray-800/50 border-gray-700/50 hover:border-gray-600 text-gray-300 hover:text-white"
             >
               <BarChart className="w-5 h-5" />
               <span>Analytics</span>
@@ -519,11 +491,7 @@ const AdminDashboard = () => {
 
             <Link
               to="/admin/feedback"
-              className={`flex items-center space-x-2 px-5 py-3 rounded-xl font-medium transition-all duration-300 border ${
-                isDark 
-                  ? "bg-gray-800/50 border-gray-700/50 hover:border-gray-600 text-gray-300 hover:text-white" 
-                  : "bg-white border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-900"
-              }`}
+              className="flex items-center space-x-2 px-5 py-3 rounded-xl font-medium transition-all duration-300 border bg-gray-800/50 border-gray-700/50 hover:border-gray-600 text-gray-300 hover:text-white"
             >
               <MessageSquare className="w-5 h-5" />
               <span>View Feedback</span>
