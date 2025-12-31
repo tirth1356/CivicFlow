@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 import { 
   ArrowRight, 
   CheckCircle, 
@@ -20,7 +19,6 @@ import {
 const Landing = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
-  const { isDark } = useTheme();
   const [activeFeature, setActiveFeature] = useState(0);
 
   const features = [
@@ -70,23 +68,17 @@ const Landing = () => {
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${
-      isDark ? 'bg-gray-900' : 'bg-gray-50'
-    }`}>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 text-white">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
-            <h1 className={`text-5xl md:text-7xl font-bold mb-6 transition-colors duration-300 ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
               Campus Issue
               <span className="block text-blue-600">Management</span>
             </h1>
             
-            <p className={`text-xl md:text-2xl mb-8 max-w-3xl mx-auto transition-colors duration-300 ${
-              isDark ? 'text-gray-400' : 'text-gray-600'
-            }`}>
+            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-400">
               Report, track, and resolve campus issues efficiently with our comprehensive management platform
             </p>
 
@@ -101,11 +93,7 @@ const Landing = () => {
               
               <button
                 onClick={() => navigate('/map')}
-                className={`px-8 py-4 rounded-xl font-semibold text-lg border transition-all duration-300 ${
-                  isDark 
-                    ? 'border-gray-700 text-gray-300 hover:bg-gray-800' 
-                    : 'border-gray-300 text-gray-700 hover:bg-gray-100'
-                }`}
+                className="px-8 py-4 rounded-xl font-semibold text-lg border border-gray-700 text-gray-300 hover:bg-gray-800 transition-all duration-300"
               >
                 View Campus Map
               </button>
@@ -121,26 +109,18 @@ const Landing = () => {
       </div>
 
       {/* Stats Section */}
-      <div className={`py-16 border-y transition-colors duration-300 ${
-        isDark ? 'border-gray-800 bg-gray-800/50' : 'border-gray-200 bg-white'
-      }`}>
+      <div className="py-16 border-y border-gray-800 bg-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className={`w-12 h-12 mx-auto mb-4 rounded-xl flex items-center justify-center ${
-                  isDark ? 'bg-blue-500/10' : 'bg-blue-100'
-                }`}>
+                <div className="w-12 h-12 mx-auto mb-4 rounded-xl flex items-center justify-center bg-blue-500/10">
                   <stat.icon className="w-6 h-6 text-blue-600" />
                 </div>
-                <div className={`text-3xl font-bold mb-2 transition-colors duration-300 ${
-                  isDark ? 'text-white' : 'text-gray-900'
-                }`}>
+                <div className="text-3xl font-bold mb-2 text-white">
                   {stat.value}
                 </div>
-                <div className={`text-sm transition-colors duration-300 ${
-                  isDark ? 'text-gray-400' : 'text-gray-600'
-                }`}>
+                <div className="text-sm text-gray-400">
                   {stat.label}
                 </div>
               </div>
@@ -153,14 +133,10 @@ const Landing = () => {
       <div className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className={`text-4xl font-bold mb-4 transition-colors duration-300 ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}>
+            <h2 className="text-4xl font-bold mb-4 text-white">
               Powerful Features
             </h2>
-            <p className={`text-xl transition-colors duration-300 ${
-              isDark ? 'text-gray-400' : 'text-gray-600'
-            }`}>
+            <p className="text-xl text-gray-400">
               Everything you need to manage campus issues effectively
             </p>
           </div>
@@ -172,25 +148,17 @@ const Landing = () => {
                 onMouseEnter={() => setActiveFeature(index)}
                 className={`p-6 rounded-2xl border transition-all duration-300 cursor-pointer ${
                   activeFeature === index
-                    ? isDark
-                      ? 'bg-gray-800/50 border-gray-700'
-                      : 'bg-white border-gray-300 shadow-lg'
-                    : isDark
-                      ? 'bg-gray-800/30 border-gray-800'
-                      : 'bg-gray-50 border-gray-200'
+                    ? 'bg-gray-800/50 border-gray-700'
+                    : 'bg-gray-800/30 border-gray-800'
                 }`}
               >
                 <div className={`w-12 h-12 rounded-xl mb-4 flex items-center justify-center ${feature.bgColor}`}>
                   <feature.icon className={`w-6 h-6 ${feature.color}`} />
                 </div>
-                <h3 className={`text-xl font-semibold mb-2 transition-colors duration-300 ${
-                  isDark ? 'text-white' : 'text-gray-900'
-                }`}>
+                <h3 className="text-xl font-semibold mb-2 text-white">
                   {feature.title}
                 </h3>
-                <p className={`transition-colors duration-300 ${
-                  isDark ? 'text-gray-400' : 'text-gray-600'
-                }`}>
+                <p className="text-gray-400">
                   {feature.description}
                 </p>
               </div>
@@ -200,19 +168,13 @@ const Landing = () => {
       </div>
 
       {/* How It Works Section */}
-      <div className={`py-20 transition-colors duration-300 ${
-        isDark ? 'bg-gray-800/50' : 'bg-gray-100'
-      }`}>
+      <div className="py-20 bg-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className={`text-4xl font-bold mb-4 transition-colors duration-300 ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}>
+            <h2 className="text-4xl font-bold mb-4 text-white">
               How It Works
             </h2>
-            <p className={`text-xl transition-colors duration-300 ${
-              isDark ? 'text-gray-400' : 'text-gray-600'
-            }`}>
+            <p className="text-xl text-gray-400">
               Simple steps to report and resolve campus issues
             </p>
           </div>
@@ -239,20 +201,14 @@ const Landing = () => {
               }
             ].map((item, index) => (
               <div key={index} className="text-center">
-                <div className={`w-16 h-16 mx-auto mb-6 rounded-2xl flex items-center justify-center ${
-                  isDark ? 'bg-blue-500/10' : 'bg-blue-100'
-                }`}>
+                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl flex items-center justify-center bg-blue-500/10">
                   <item.icon className="w-8 h-8 text-blue-600" />
                 </div>
                 <div className="text-sm font-bold text-blue-600 mb-2">{item.step}</div>
-                <h3 className={`text-xl font-semibold mb-4 transition-colors duration-300 ${
-                  isDark ? 'text-white' : 'text-gray-900'
-                }`}>
+                <h3 className="text-xl font-semibold mb-4 text-white">
                   {item.title}
                 </h3>
-                <p className={`transition-colors duration-300 ${
-                  isDark ? 'text-gray-400' : 'text-gray-600'
-                }`}>
+                <p className="text-gray-400">
                   {item.description}
                 </p>
               </div>
@@ -264,14 +220,10 @@ const Landing = () => {
       {/* CTA Section */}
       <div className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className={`text-4xl font-bold mb-6 transition-colors duration-300 ${
-            isDark ? 'text-white' : 'text-gray-900'
-          }`}>
+          <h2 className="text-4xl font-bold mb-6 text-white">
             Ready to Get Started?
           </h2>
-          <p className={`text-xl mb-8 transition-colors duration-300 ${
-            isDark ? 'text-gray-400' : 'text-gray-600'
-          }`}>
+          <p className="text-xl mb-8 text-gray-400">
             Join hundreds of students and staff making campus better every day
           </p>
           
@@ -286,11 +238,7 @@ const Landing = () => {
             {!currentUser && (
               <button
                 onClick={() => navigate('/login')}
-                className={`px-8 py-4 rounded-xl font-semibold text-lg border transition-all duration-300 ${
-                  isDark 
-                    ? 'border-gray-700 text-gray-300 hover:bg-gray-800' 
-                    : 'border-gray-300 text-gray-700 hover:bg-gray-100'
-                }`}
+                className="px-8 py-4 rounded-xl font-semibold text-lg border border-gray-700 text-gray-300 hover:bg-gray-800 transition-all duration-300"
               >
                 Already have an account?
               </button>
@@ -300,30 +248,22 @@ const Landing = () => {
       </div>
 
       {/* Footer */}
-      <footer className={`py-12 border-t transition-colors duration-300 ${
-        isDark ? 'border-gray-800 bg-gray-900' : 'border-gray-200 bg-gray-50'
-      }`}>
+      <footer className="py-12 border-t border-gray-800 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <Shield className="w-5 h-5 text-white" />
               </div>
-              <span className={`text-xl font-bold transition-colors duration-300 ${
-                isDark ? 'text-white' : 'text-gray-900'
-              }`}>
+              <span className="text-xl font-bold text-white">
                 CivicFlow
               </span>
             </div>
-            <p className={`transition-colors duration-300 ${
-              isDark ? 'text-gray-400' : 'text-gray-600'
-            }`}>
+            <p className="text-gray-400">
               Built with ❤️ by Team Catalyst
             </p>
             <div className="mt-4 flex justify-center space-x-6">
-              <span className={`text-sm transition-colors duration-300 ${
-                isDark ? 'text-gray-500' : 'text-gray-500'
-              }`}>
+              <span className="text-sm text-gray-500">
                 Divy Mevada • Tirth Patel • Yatri Patel • Kushal Vanjara
               </span>
             </div>

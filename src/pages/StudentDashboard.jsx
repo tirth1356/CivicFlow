@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { useTheme } from "../context/ThemeContext";
 import { logOut } from "../firebase/auth";
 import {
   createIssue,
@@ -52,7 +51,6 @@ import {
 
 const StudentDashboard = () => {
   const { currentUser } = useAuth();
-  const { isDark } = useTheme();
   const navigate = useNavigate();
   const [showReportForm, setShowReportForm] = useState(false);
   const [issues, setIssues] = useState([]);
@@ -388,7 +386,7 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900/40 to-purple-900/40 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 text-white overflow-hidden">
       {/* Enhanced Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Floating particles */}
@@ -483,10 +481,10 @@ const StudentDashboard = () => {
             className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8"
           >
             <div>
-              <h2 className={`text-3xl font-bold mb-2 ${isDark ? "text-white" : "text-gray-900"}`}>
+              <h2 className="text-3xl font-bold mb-2 text-white">
                 Welcome back!
               </h2>
-              <p className={isDark ? "text-gray-400" : "text-gray-600"}>
+              <p className="text-gray-400">
                 Track and report campus issues in real-time
               </p>
             </div>
@@ -508,21 +506,17 @@ const StudentDashboard = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className={`backdrop-blur-sm rounded-2xl border p-6 ${
-                isDark 
-                  ? "bg-gray-900/40 border-gray-800/50" 
-                  : "bg-white border-gray-200 shadow-sm"
-              }`}
+              className="backdrop-blur-sm rounded-2xl border p-6 bg-gray-900/40 border-gray-800/50"
             >
               <div className="flex items-center justify-between mb-4">
-                <div className={`p-3 rounded-xl ${isDark ? "bg-blue-500/20" : "bg-blue-100"}`}>
-                  <FileText className={`w-6 h-6 ${isDark ? "text-blue-400" : "text-blue-600"}`} />
+                <div className="p-3 rounded-xl bg-blue-500/20">
+                  <FileText className="w-6 h-6 text-blue-400" />
                 </div>
-                <span className={`text-2xl font-bold ${isDark ? "text-white" : "text-gray-900"}`}>
+                <span className="text-2xl font-bold text-white">
                   {totalIssues}
                 </span>
               </div>
-              <h3 className={isDark ? "text-gray-400 text-sm" : "text-gray-600 text-sm"}>Total Issues</h3>
+              <h3 className="text-gray-400 text-sm">Total Issues</h3>
             </motion.div>
 
           {/* Pending Issues Card */}
@@ -530,65 +524,51 @@ const StudentDashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className={`backdrop-blur-sm rounded-2xl border p-6 ${
-              isDark 
-                ? "bg-gray-900/40 border-gray-800/50" 
-                : "bg-white border-gray-200 shadow-sm"
-            }`}
+            className="backdrop-blur-sm rounded-2xl border p-6 bg-gray-900/40 border-gray-800/50"
           >
             <div className="flex items-center justify-between mb-4">
-              <div className={`p-3 rounded-xl ${isDark ? "bg-yellow-500/20" : "bg-yellow-100"}`}>
-                <Clock className={`w-6 h-6 ${isDark ? "text-yellow-400" : "text-yellow-600"}`} />
+              <div className="p-3 rounded-xl bg-yellow-500/20">
+                <Clock className="w-6 h-6 text-yellow-400" />
               </div>
-              <span className={`text-2xl font-bold ${isDark ? "text-yellow-400" : "text-yellow-600"}`}>
+              <span className="text-2xl font-bold text-yellow-400">
                 {pendingIssues}
               </span>
             </div>
-            <h3 className={isDark ? "text-gray-400 text-sm" : "text-gray-600 text-sm"}>Pending Issues</h3>
+            <h3 className="text-gray-400 text-sm">Pending Issues</h3>
           </motion.div>
 
-          {/* Resolved Issues Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className={`backdrop-blur-sm rounded-2xl border p-6 ${
-              isDark 
-                ? "bg-gray-900/40 border-gray-800/50" 
-                : "bg-white border-gray-200 shadow-sm"
-            }`}
+            className="backdrop-blur-sm rounded-2xl border p-6 bg-gray-900/40 border-gray-800/50"
           >
             <div className="flex items-center justify-between mb-4">
-              <div className={`p-3 rounded-xl ${isDark ? "bg-green-500/20" : "bg-green-100"}`}>
-                <CheckCircle className={`w-6 h-6 ${isDark ? "text-green-400" : "text-green-600"}`} />
+              <div className="p-3 rounded-xl bg-green-500/20">
+                <CheckCircle className="w-6 h-6 text-green-400" />
               </div>
-              <span className={`text-2xl font-bold ${isDark ? "text-green-400" : "text-green-600"}`}>
+              <span className="text-2xl font-bold text-green-400">
                 {resolvedIssues}
               </span>
             </div>
-            <h3 className={isDark ? "text-gray-400 text-sm" : "text-gray-600 text-sm"}>Resolved Issues</h3>
+            <h3 className="text-gray-400 text-sm">Resolved Issues</h3>
           </motion.div>
 
-          {/* Urgent Issues Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className={`backdrop-blur-sm rounded-2xl border p-6 ${
-              isDark 
-                ? "bg-gray-900/40 border-gray-800/50" 
-                : "bg-white border-gray-200 shadow-sm"
-            }`}
+            className="backdrop-blur-sm rounded-2xl border p-6 bg-gray-900/40 border-gray-800/50"
           >
             <div className="flex items-center justify-between mb-4">
-              <div className={`p-3 rounded-xl ${isDark ? "bg-red-500/20" : "bg-red-100"}`}>
-                <AlertCircle className={`w-6 h-6 ${isDark ? "text-red-400" : "text-red-600"}`} />
+              <div className="p-3 rounded-xl bg-red-500/20">
+                <AlertCircle className="w-6 h-6 text-red-400" />
               </div>
-              <span className={`text-2xl font-bold ${isDark ? "text-red-400" : "text-red-600"}`}>
+              <span className="text-2xl font-bold text-red-400">
                 {urgentIssues}
               </span>
             </div>
-            <h3 className={isDark ? "text-gray-400 text-sm" : "text-gray-600 text-sm"}>Urgent Issues</h3>
+            <h3 className="text-gray-400 text-sm">Urgent Issues</h3>
           </motion.div>
           </div>
         </div>

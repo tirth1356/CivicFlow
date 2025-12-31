@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useTheme } from "../context/ThemeContext";
 import {
   getAllIssues,
   updateIssueStatus,
@@ -48,7 +47,6 @@ import {
 
 const AdminDashboard = () => {
   const { currentUser } = useAuth();
-  const { isDark } = useTheme();
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedIssue, setSelectedIssue] = useState(null);
@@ -306,9 +304,9 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className={`min-h-screen ${isDark ? "bg-gradient-to-b from-gray-900 to-gray-950" : "bg-gray-50"}`}>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 text-white">
       {/* Header */}
-      <div className={`sticky top-0 z-50 backdrop-blur-lg border-b ${isDark ? "bg-gray-900/80 border-gray-800/50" : "bg-white/80 border-gray-200"}`}>
+      <div className="sticky top-0 z-50 backdrop-blur-lg border-b bg-gray-900/80 border-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-3">
@@ -316,25 +314,25 @@ const AdminDashboard = () => {
                 <BarChart3 className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h1 className={`text-lg font-bold ${isDark ? "text-white" : "text-gray-900"}`}>
+                <h1 className="text-lg font-bold text-white">
                   Admin Dashboard
                 </h1>
-                <p className={`text-xs ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+                <p className="text-xs text-gray-400">
                   Campus Management System
                 </p>
               </div>
             </div>
 
             <div className="flex items-center space-x-4">
-              <div className={`flex items-center space-x-3 px-3 py-2 rounded-xl border ${isDark ? "bg-purple-500/10 border-purple-500/20" : "bg-purple-50 border-purple-100"}`}>
+              <div className="flex items-center space-x-3 px-3 py-2 rounded-xl border bg-purple-500/10 border-purple-500/20">
                 <div className="w-7 h-7 rounded-full bg-purple-600 flex items-center justify-center">
                   <User className="w-3.5 h-3.5 text-white" />
                 </div>
                 <div className="text-right">
-                  <p className={`text-sm font-medium ${isDark ? "text-white" : "text-gray-900"}`}>
+                  <p className="text-sm font-medium text-white">
                     Administrator
                   </p>
-                  <p className={`text-xs ${isDark ? "text-gray-400" : "text-gray-500"}`}>Admin Access</p>
+                  <p className="text-xs text-gray-400">Admin Access</p>
                 </div>
               </div>
             </div>
@@ -350,10 +348,10 @@ const AdminDashboard = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mb-6"
           >
-            <h2 className={`text-3xl md:text-4xl font-bold mb-2 ${isDark ? "text-white" : "text-gray-900"}`}>
+            <h2 className="text-3xl md:text-4xl font-bold mb-2 text-white">
               System Overview
             </h2>
-            <p className={isDark ? "text-gray-400" : "text-gray-600"}>
+            <p className="text-gray-400">
               Monitor and manage all campus issues
             </p>
           </motion.div>

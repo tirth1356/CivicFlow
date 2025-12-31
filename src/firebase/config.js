@@ -1,26 +1,25 @@
 // Firebase Configuration
-// Replace these values with your Firebase project configuration
-// Get these from: Firebase Console > Project Settings > General > Your apps > Web app
+// Environment variables are loaded from .env file
+// For production, set these in your hosting platform (Vercel, Netlify, etc.)
 
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
-// TODO: Replace with your Firebase configuration
+// Firebase configuration using environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyBdiktNOvHBkJeNStBZ7QQzbANXcAFLs3g",
-  authDomain: "catalyst-10.firebaseapp.com",
-  projectId: "catalyst-10",
-  storageBucket: "catalyst-10.firebasestorage.app",
-  messagingSenderId: "4281423121561:428142312156:web:ee270894a6869725661219",
-  appId: "1:4281423121561:web:ee270894a6869725661219",
-  measurementId: "G-SHLRJBM5XZ"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 // Check if Firebase is configured
-const isFirebaseConfigured = firebaseConfig.apiKey !== "YOUR_API_KEY" && 
-                              firebaseConfig.projectId !== "YOUR_PROJECT_ID";
+const isFirebaseConfigured = firebaseConfig.apiKey && firebaseConfig.projectId;
 
 // Initialize Firebase only if configured
 let app, auth, db, storage;
