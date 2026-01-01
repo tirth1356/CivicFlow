@@ -24,9 +24,15 @@ export const createIssue = async (issueData) => {
   if (!isFirebaseAvailable) {
     throw new Error('Firebase is not configured. Please set up Firebase first.');
   }
+  
+  // Validate required fields
+  if (!issueData.title || !issueData.description || !issueData.category || !issueData.block) {
+    throw new Error('Missing required fields: title, description, category, and block are required.');
+  }
+  
   const docRef = await addDoc(collection(db, 'issues'), {
     ...issueData,
-    status: 'Pending',
+    status: 'Reported',
     createdAt: new Date().toISOString(),
   });
   return docRef.id;
