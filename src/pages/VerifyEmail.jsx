@@ -74,7 +74,7 @@ const VerifyEmail = () => {
             </div>
             <h1 className="text-2xl font-bold text-white mb-2">Verify Your Email</h1>
             <p className="text-gray-400">
-              We've sent a verification link to
+              We've automatically sent a verification link to
             </p>
             <p className="text-blue-400 font-medium mt-1">
               {currentUser.email}

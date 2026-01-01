@@ -7,15 +7,15 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
-// Firebase configuration using environment variables
+// Firebase configuration using environment variables with fallbacks
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyBdiktNOvHBkJeNStBZ7QQzbANXcAFLs3g",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "catalyst-10.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "catalyst-10",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "catalyst-10.firebasestorage.app",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "4281423121561:428142312156:web:ee270894a6869725661219",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:4281423121561:web:ee270894a6869725661219",
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-SHLRJBM5XZ"
 };
 
 // Check if Firebase is configured

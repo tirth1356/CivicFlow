@@ -6,7 +6,8 @@ import {
   confirmPasswordReset,
   verifyPasswordResetCode,
   updateProfile,
-  onAuthStateChanged 
+  onAuthStateChanged,
+  sendEmailVerification
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from './config';
@@ -27,6 +28,9 @@ export const signUp = async (email, password, additionalData = {}) => {
     // Create user account
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
+
+    // Send email verification immediately
+    await sendEmailVerification(user);
 
     // Determine user role based on email
     const role = isAdminEmail(email) ? 'admin' : 'student';

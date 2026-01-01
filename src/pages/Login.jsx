@@ -52,6 +52,13 @@ const Login = () => {
 
     try {
       const { user } = await signIn(email, password);
+      
+      // Check if email is verified
+      if (!user.emailVerified) {
+        navigate("/verify-email");
+        return;
+      }
+      
       navigate("/dashboard");
     } catch (err) {
       setError(err.message || "Failed to sign in");
@@ -145,7 +152,7 @@ const Login = () => {
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/30">
             <University className="w-4 h-4 mr-2 text-blue-400" />
             <span className="text-sm font-medium text-blue-400">
-              Nirma University Access Only (Check spam folder)
+              Nirma University Access Only • Check spam/inbox for verification emails
             </span>
           </div>
           </div>

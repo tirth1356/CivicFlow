@@ -19,6 +19,8 @@ import {
   CheckCircle,
 } from "lucide-react";
 
+import LightRays from '../components/LightRays';
+
 const Home = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
@@ -136,291 +138,30 @@ const Home = () => {
     },
   ];
 
-  const AnimatedMapBackground = () => {
-    const rotateX = useTransform(mouseY, [-300, 300], [8, -8]);
-    const rotateY = useTransform(mouseX, [-300, 300], [-8, 8]);
-    const dotX = useTransform(mouseX, [-300, 300], [0, 100]);
-    const dotY = useTransform(mouseY, [-300, 300], [0, 100]);
-
-    return (
-      <motion.div
-        style={{ rotateX, rotateY }}
-        className="absolute inset-0 z-0 pointer-events-none"
-      >
-        {/* Animated Grid */}
-        <div className="absolute inset-0">
-          {[...Array(15)].map((_, i) => (
-            <motion.div
-              key={`grid-v-${i}`}
-              className="absolute top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-blue-400/20 to-transparent"
-              style={{ left: `${i * 7}%` }}
-              animate={{
-                opacity: [0.1, 0.4, 0.1],
-                scaleY: [0.8, 1.2, 0.8],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                delay: i * 0.2,
-              }}
-            />
-          ))}
-          {[...Array(12)].map((_, i) => (
-            <motion.div
-              key={`grid-h-${i}`}
-              className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-400/20 to-transparent"
-              style={{ top: `${i * 8}%` }}
-              animate={{
-                opacity: [0.1, 0.4, 0.1],
-                scaleX: [0.8, 1.2, 0.8],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                delay: i * 0.15,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Floating Icons */}
-        {[
-          { Icon: MapPin, x: 15, y: 20, color: "text-blue-400", delay: 0 },
-          { Icon: Users, x: 75, y: 25, color: "text-green-400", delay: 0.5 },
-          { Icon: Shield, x: 25, y: 70, color: "text-purple-400", delay: 1 },
-          { Icon: Zap, x: 80, y: 75, color: "text-yellow-400", delay: 1.5 },
-          { Icon: BarChart, x: 60, y: 15, color: "text-pink-400", delay: 2 },
-          { Icon: CheckCircle, x: 10, y: 50, color: "text-emerald-400", delay: 2.5 },
-        ].map(({ Icon, x, y, color, delay }, i) => (
-          <motion.div
-            key={`icon-${i}`}
-            className={`absolute ${color} cursor-pointer`}
-            style={{ left: `${x}%`, top: `${y}%` }}
-            animate={{
-              y: [0, -20, 0],
-              rotate: [0, 360],
-              scale: [0.8, 1.2, 0.8],
-              opacity: [0.3, 0.8, 0.3],
-            }}
-            whileHover={{
-              rotate: 360,
-              scale: 1.5,
-              transition: { duration: 0.6 }
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              delay,
-              ease: "easeInOut",
-            }}
-          >
-            <Icon className="w-6 h-6" />
-          </motion.div>
-        ))}
-
-        {/* Interactive Connection Lines */}
-        <svg className="absolute inset-0 w-full h-full">
-          <defs>
-            <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#3b82f6" stopOpacity="0" />
-              <stop offset="50%" stopColor="#3b82f6" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0" />
-            </linearGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-              <feMerge>
-                <feMergeNode in="coloredBlur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-
-          {/* Dynamic Connection Paths */}
-          {mapPoints.map((point, index) => {
-            const nextPoint = mapPoints[(index + 1) % mapPoints.length];
-            return (
-              <motion.path
-                key={`path-${index}`}
-                d={`M ${point.x * 5} ${point.y * 4} Q ${
-                  ((point.x + nextPoint.x) / 2) * 5
-                } ${point.y * 4 - 30}, ${nextPoint.x * 5} ${nextPoint.y * 4}`}
-                fill="none"
-                stroke="url(#pathGradient)"
-                strokeWidth="2"
-                filter="url(#glow)"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ 
-                  pathLength: [0, 1, 0], 
-                  opacity: [0, 0.8, 0] 
-                }}
-                transition={{ 
-                  duration: 4, 
-                  repeat: Infinity,
-                  delay: index * 0.5 
-                }}
-              />
-            );
-          })}
-        </svg>
-
-        {/* Interactive Map Points */}
-        {mapPoints.map((point) => (
-          <motion.div
-            key={point.id}
-            className={`absolute ${point.color} w-4 h-4 rounded-full cursor-pointer z-20 shadow-lg`}
-            style={{
-              left: `${point.x}%`,
-              top: `${point.y}%`,
-            }}
-            animate={{
-              scale: [1, 1.8, 1],
-              boxShadow: [
-                `0 0 0 0 ${point.color.replace("bg-", "rgba(").replace("-500", ", 0.4)")}`,
-                `0 0 0 15px ${point.color.replace("bg-", "rgba(").replace("-500", ", 0)")}`,
-              ],
-            }}
-            transition={{
-              duration: 2.5,
-              repeat: Infinity,
-              delay: point.id * 0.4,
-            }}
-            onMouseEnter={() => setActiveMapPoint(point.id)}
-            onMouseLeave={() => setActiveMapPoint(0)}
-          >
-            <AnimatePresence>
-              {activeMapPoint === point.id && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.8 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.8 }}
-                  className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-gray-800/90 backdrop-blur-sm px-4 py-2 rounded-xl whitespace-nowrap border border-gray-700/50 shadow-xl"
-                >
-                  <p className="text-sm font-semibold text-white">{point.label}</p>
-                  <p className="text-xs text-gray-300">
-                    {point.issues} active issues
-                  </p>
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45 border-r border-b border-gray-700/50"></div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        ))}
-
-        {/* Floating Geometric Shapes */}
-        {[
-          { shape: "circle", x: 20, y: 30, size: 60, color: "bg-blue-500/10", delay: 0 },
-          { shape: "square", x: 70, y: 20, size: 40, color: "bg-purple-500/10", delay: 1 },
-          { shape: "triangle", x: 30, y: 80, size: 50, color: "bg-green-500/10", delay: 2 },
-          { shape: "circle", x: 85, y: 60, size: 35, color: "bg-yellow-500/10", delay: 3 },
-        ].map((shape, i) => (
-          <motion.div
-            key={`shape-${i}`}
-            className={`absolute ${shape.color} backdrop-blur-sm border border-white/10 cursor-pointer`}
-            style={{
-              left: `${shape.x}%`,
-              top: `${shape.y}%`,
-              width: `${shape.size}px`,
-              height: `${shape.size}px`,
-              borderRadius: shape.shape === "circle" ? "50%" : shape.shape === "triangle" ? "0" : "12px",
-              clipPath: shape.shape === "triangle" ? "polygon(50% 0%, 0% 100%, 100% 100%)" : "none",
-            }}
-            animate={{
-              y: [0, -30, 0],
-              rotate: [0, 180, 360],
-              scale: [0.8, 1.1, 0.8],
-              opacity: [0.2, 0.6, 0.2],
-            }}
-            whileHover={{
-              rotate: 720,
-              scale: 1.3,
-              transition: { duration: 0.8 }
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              delay: shape.delay,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-
-        {/* Mouse-Following Interactive Dots */}
-        {[...Array(8)].map((_, i) => {
-          const delay = i * 0.1;
-          const offsetX = useTransform(dotX, [0, 100], [i * 15, 100 - i * 10]);
-          const offsetY = useTransform(dotY, [0, 100], [i * 12, 100 - i * 8]);
-          
-          return (
-            <motion.div
-              key={`mouse-dot-${i}`}
-              className={`absolute w-2 h-2 rounded-full ${
-                i % 3 === 0 ? 'bg-blue-400/70' : 
-                i % 3 === 1 ? 'bg-purple-400/70' : 'bg-cyan-400/70'
-              } shadow-lg`}
-              style={{
-                left: offsetX,
-                top: offsetY,
-                filter: 'blur(0.5px)',
-              }}
-              animate={{
-                scale: [0.8, 1.2, 0.8],
-                opacity: [0.4, 0.8, 0.4],
-              }}
-              transition={{
-                duration: 2 + i * 0.2,
-                repeat: Infinity,
-                delay,
-                ease: "easeInOut",
-              }}
-            />
-          );
-        })}
-
-        {/* Particle System */}
-        {[...Array(12)].map((_, i) => (
-          <motion.div
-            key={`particle-${i}`}
-            className="absolute w-1 h-1 bg-blue-400/60 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              x: [0, Math.random() * 200 - 100],
-              y: [0, Math.random() * 200 - 100],
-              opacity: [0, 1, 0],
-              scale: [0, 1.5, 0],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              delay: i * 0.3,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </motion.div>
-    );
-  };
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 text-white overflow-hidden">
       {/* HERO SECTION */}
-      <div
-        className="relative overflow-hidden bg-gradient-to-br from-blue-900/20 via-gray-900 to-purple-900/20 py-20 md:py-32"
-        onMouseMove={(e) => {
-          const { clientX, clientY, currentTarget } = e;
-          const rect = currentTarget.getBoundingClientRect();
-          mouseX.set(clientX - rect.width / 2);
-          mouseY.set(clientY - rect.height / 2);
-        }}
-      >
-        {/* Animated Background */}
-        <AnimatedMapBackground />
+      <div className="relative overflow-hidden bg-gradient-to-br from-blue-900/20 via-gray-900 to-purple-900/20 py-20 md:py-32">
+        {/* Light Rays Background */}
+        <div className="absolute inset-0 z-0">
+          <LightRays
+            raysOrigin="top-center"
+            raysColor="#00ffff"
+            raysSpeed={1.5}
+            lightSpread={0.8}
+            rayLength={1.2}
+            followMouse={true}
+            mouseInfluence={0.1}
+            noiseAmount={0.1}
+            distortion={0.05}
+            className="custom-rays"
+          />
+        </div>
 
         {/* Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-center lg:text-left">
+          <div className="flex items-center justify-center min-h-[600px]">
+            <div className="text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -436,13 +177,13 @@ const Home = () => {
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 text-blue-400">
                   CivicFlow
                 </h1>
-                <p className="text-base sm:text-lg lg:text-xl text-gray-300 mb-6 sm:mb-8 max-w-2xl leading-relaxed">
+                <p className="text-base sm:text-lg lg:text-xl text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
                   Transforming campus management through intelligent issue
                   reporting, real-time tracking, and data-driven insights for a
                   better campus experience.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -473,7 +214,7 @@ const Home = () => {
                 </div>
 
                 {/* Stats */}
-                <div className="grid grid-cols-3 gap-6 mt-12 max-w-md">
+                <div className="grid grid-cols-3 gap-6 mt-12 max-w-md mx-auto">
                   {[
                     { value: resolvedCount > 0 ? `${resolvedCount}` : "0", label: "Issues Resolved" },
                     { value: "24/7", label: "Support" },
@@ -484,7 +225,7 @@ const Home = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 + i * 0.1 }}
-                      className="text-center lg:text-left"
+                      className="text-center"
                     >
                       <div className="text-2xl font-bold text-blue-400">
                         {stat.value}
@@ -495,33 +236,6 @@ const Home = () => {
                 </div>
               </motion.div>
             </div>
-
-            {/* Hero Visualization */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative h-96 lg:h-auto"
-            >
-              <div className="relative h-full bg-gradient-to-br from-blue-900/20 to-purple-900/20 rounded-2xl border border-gray-700/50 overflow-hidden">
-                {/* Mini Map Preview */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {mapPoints.map((point) => (
-                    <motion.div
-                      key={`preview-${point.id}`}
-                      className={`absolute ${point.color} w-3 h-3 rounded-full`}
-                      style={{ left: `${point.x}%`, top: `${point.y}%` }}
-                      animate={{ y: [0, -10, 0] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        delay: point.id * 0.2,
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </motion.div>
           </div>
         </div>
       </div>
@@ -546,46 +260,64 @@ const Home = () => {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                onMouseEnter={() => setHoveredFeature(index)}
-                onMouseLeave={() => setHoveredFeature(null)}
-                className={`bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-4 sm:p-6 rounded-xl border ${
-                  hoveredFeature === index
-                    ? "border-blue-500/50 shadow-lg shadow-blue-500/10"
-                    : "border-gray-700/50"
-                } backdrop-blur-sm hover:scale-[1.02] transition-all duration-300`}
-              >
-                <div className="flex items-start space-x-3 sm:space-x-4">
-                  <div
-                    className={`p-2 sm:p-3 rounded-lg ${
-                      hoveredFeature === index
-                        ? "bg-blue-500/20"
-                        : "bg-gray-800"
-                    }`}
-                  >
-                    <feature.icon
-                      className={`w-5 sm:w-6 h-5 sm:h-6 ${
-                        hoveredFeature === index
-                          ? "text-blue-400"
-                          : "text-gray-400"
+            {features.map((feature, index) => {
+              const [isHovered, setIsHovered] = useState(false);
+              
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  onHoverStart={() => setIsHovered(true)}
+                  onHoverEnd={() => setIsHovered(false)}
+                  className={`bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-4 sm:p-6 rounded-xl border transition-all duration-300 cursor-pointer ${
+                    isHovered
+                      ? "border-blue-500/50 shadow-lg shadow-blue-500/10 scale-[1.02]"
+                      : "border-gray-700/50"
+                  } backdrop-blur-sm`}
+                  animate={{
+                    scale: isHovered ? [1.02, 1.05, 1.02] : [1],
+                    y: isHovered ? [0, -5, 0] : [0],
+                    rotateY: isHovered ? [0, 2, -2, 0] : [0],
+                  }}
+                >
+                  <div className="flex items-start space-x-3 sm:space-x-4">
+                    <motion.div
+                      className={`p-2 sm:p-3 rounded-lg transition-all duration-300 ${
+                        isHovered
+                          ? "bg-blue-500/20"
+                          : "bg-gray-800"
                       }`}
-                    />
+                      animate={{
+                        scale: isHovered ? [1, 1.2, 1.1] : [1],
+                        rotate: isHovered ? [0, 10, -10, 0] : [0],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      <feature.icon
+                        className={`w-5 sm:w-6 h-5 sm:h-6 transition-colors duration-300 ${
+                          isHovered
+                            ? "text-blue-400"
+                            : "text-gray-400"
+                        }`}
+                      />
+                    </motion.div>
+                    <div>
+                      <h3 className="text-lg sm:text-xl font-semibold mb-2">
+                        {feature.title}
+                      </h3>
+                      <p className="text-sm sm:text-base text-gray-400">{feature.desc}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-lg sm:text-xl font-semibold mb-2">
-                      {feature.title}
-                    </h3>
-                    <p className="text-sm sm:text-base text-gray-400">{feature.desc}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>

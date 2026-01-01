@@ -56,7 +56,8 @@ const Signup = () => {
     setLoading(true);
 
     try {
-      await signUp(email, password, name);
+      const { user } = await signUp(email, password, { name });
+      // Email verification is automatically sent during signup
       navigate("/verify-email");
     } catch (err) {
       setError(err.message || "Failed to create account");

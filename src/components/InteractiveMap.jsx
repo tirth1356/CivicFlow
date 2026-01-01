@@ -91,10 +91,7 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
 
       switch (filter) {
         case "all":
-          // Show only pending/remaining issues (not resolved)
-          filteredIssues = filteredIssues.filter(
-            (issue) => issue.status !== "Resolved"
-          );
+          // Show all issues (both pending and resolved)
           break;
         case "pending":
           filteredIssues = filteredIssues.filter(
@@ -458,7 +455,16 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     whileHover={{ scale: 1.1 }}
-                    onClick={() => setSelectedBlock(block)}
+                    onClick={() => {
+                      setSelectedBlock(block);
+                      // Auto-scroll to block details section
+                      setTimeout(() => {
+                        const element = document.querySelector('[data-block-details]');
+                        if (element) {
+                          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                      }, 100);
+                    }}
                   >
                     {/* Intensity Circle */}
                     <div
@@ -534,6 +540,7 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
         {/* Block Details Panel */}
         {selectedBlock && (
           <motion.div
+            data-block-details
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="bg-gradient-to-br from-gray-900/60 to-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-800/50 p-6"
