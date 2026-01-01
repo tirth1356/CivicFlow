@@ -142,7 +142,6 @@ const Home = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 text-white overflow-hidden">
       {/* HERO SECTION */}
       <div className="relative overflow-hidden bg-gradient-to-br from-blue-900/20 via-gray-900 to-purple-900/20 py-20 md:py-32">
-        {/* Light Rays Background */}
         <div className="absolute inset-0 z-0">
           <LightRays
             raysOrigin="top-center"
@@ -151,7 +150,7 @@ const Home = () => {
             lightSpread={0.8}
             rayLength={1.2}
             followMouse={true}
-            mouseInfluence={0.1}
+            mouseInfluence={0.3}
             noiseAmount={0.1}
             distortion={0.05}
             className="custom-rays"
