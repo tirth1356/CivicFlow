@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import { logOut } from "../firebase/auth";
 import {
   createIssue,
   getUserIssues,
   submitFeedback,
+  addIssueComment,
 } from "../firebase/firestore";
 import { uploadIssueImage } from "../supabase/storage";
 import { updateDoc, doc } from "firebase/firestore";
@@ -14,6 +16,9 @@ import { getBlockCoordinates, CAMPUS_BLOCK_NAMES } from "../config/campusMap";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Modal from "../components/Modal";
+import LoadingSkeleton from "../components/LoadingSkeleton";
+import CameraCapture from "../components/CameraCapture";
+import CommentsSection from "../components/CommentsSection";
 import {
   PlusCircle,
   MapPin,
@@ -46,13 +51,16 @@ import {
   ArrowUpRight,
   Download,
   Share2,
+  Camera,
   MoreVertical,
 } from "lucide-react";
 
 const StudentDashboard = () => {
   const { currentUser } = useAuth();
+  const { toast } = useToast();
   const navigate = useNavigate();
   const [showReportForm, setShowReportForm] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -215,6 +223,26 @@ const StudentDashboard = () => {
     }
   };
 
+  const handleCameraCapture = (imageBlob) => {
+    setFormData({
+      ...formData,
+      image: imageBlob,
+      imagePreview: URL.createObjectURL(imageBlob),
+    });
+    setShowCamera(false);
+    toast.success('Photo captured successfully!');
+  };
+
+  const handleAddComment = async (issueId, commentData) => {
+    try {
+      await addIssueComment(issueId, commentData);
+      toast.success('Comment added successfully!');
+    } catch (error) {
+      console.error('Error adding comment:', error);
+      toast.error('Failed to add comment');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -283,19 +311,15 @@ const StudentDashboard = () => {
         imagePreview: null,
       });
       setShowReportForm(false);
-      setModal({
-        isOpen: true,
-        title: "Success!",
-        message: "Issue reported successfully!",
-        type: "success",
+      toast.success('Issue reported successfully!', {
+        title: 'Success!',
+        duration: 5000
       });
     } catch (error) {
       console.error("Error reporting issue:", error);
-      setModal({
-        isOpen: true,
-        title: "Error",
-        message: error.message || "Failed to report issue. Please try again.",
-        type: "error",
+      toast.error(error.message || 'Failed to report issue. Please try again.', {
+        title: 'Error',
+        duration: 5000
       });
     } finally {
       setSubmitting(false);
@@ -357,28 +381,24 @@ const StudentDashboard = () => {
       await submitFeedback({
         issueId: feedbackIssue.id,
         issueTitle: feedbackIssue.title,
-        rating: feedbackData.rating,
+        rating: Number(feedbackData.rating), // Ensure it's a number
         comment: feedbackData.comment,
         submittedBy: currentUser.uid,
         submittedByEmail: currentUser.email,
       });
 
-      setModal({
-        isOpen: true,
-        title: "Thank You!",
-        message: "Your feedback has been submitted successfully.",
-        type: "success",
+      toast.success('Feedback submitted successfully!', {
+        title: 'Thank You!',
+        duration: 5000
       });
 
       setFeedbackIssue(null);
       setFeedbackData({ rating: 5, comment: "" });
     } catch (error) {
       console.error("Error submitting feedback:", error);
-      setModal({
-        isOpen: true,
-        title: "Error",
-        message: "Failed to submit feedback. Please try again.",
-        type: "error",
+      toast.error('Failed to submit feedback. Please try again.', {
+        title: 'Error',
+        duration: 5000
       });
     } finally {
       setSubmittingFeedback(false);
@@ -713,6 +733,14 @@ const StudentDashboard = () => {
                           onChange={handleInputChange}
                           className="flex-1 w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 text-sm"
                         />
+                        <button
+                          type="button"
+                          onClick={() => setShowCamera(true)}
+                          className="px-4 py-3 bg-blue-600/20 border border-blue-500/30 text-blue-400 rounded-xl hover:bg-blue-600/30 transition-colors flex items-center space-x-2"
+                        >
+                          <Camera className="w-4 h-4" />
+                          <span>Take Photo</span>
+                        </button>
                         {formData.imagePreview && (
                           <div className="relative w-20 h-20 sm:w-20 sm:h-20 rounded-lg overflow-hidden border border-gray-700/50 mx-auto sm:mx-0">
                             <img
@@ -887,10 +915,7 @@ const StudentDashboard = () => {
 
             {/* Issues Grid */}
             {loading ? (
-              <div className="bg-gray-900/40 backdrop-blur-sm rounded-2xl border border-gray-800/50 p-12 text-center">
-                <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                <p className="text-gray-400">Loading your issues...</p>
-              </div>
+              <LoadingSkeleton type="card" count={3} />
             ) : sortedIssues.length === 0 ? (
               <div className="bg-gray-900/40 backdrop-blur-sm rounded-2xl border border-gray-800/50 p-12 text-center">
                 <AlertCircle className="w-12 h-12 text-gray-600 mx-auto mb-4" />
@@ -1031,6 +1056,14 @@ const StudentDashboard = () => {
                             </div>
                           )}
                         </div>
+
+                        {/* Comments Section */}
+                        <CommentsSection
+                          issueId={issue.id}
+                          comments={issue.comments || []}
+                          onAddComment={(commentData) => handleAddComment(issue.id, commentData)}
+                          isOptional={true}
+                        />
                       </div>
                     </motion.div>
                   );
@@ -1040,6 +1073,16 @@ const StudentDashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Camera Capture Modal */}
+      <AnimatePresence>
+        {showCamera && (
+          <CameraCapture
+            onCapture={handleCameraCapture}
+            onClose={() => setShowCamera(false)}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Image Viewer Modal */}
       {viewingImage && (
@@ -1127,7 +1170,7 @@ const StudentDashboard = () => {
                           key={star}
                           type="button"
                           onClick={() =>
-                            setFeedbackData({ ...feedbackData, rating: star })
+                            setFeedbackData({ ...feedbackData, rating: Number(star) })
                           }
                           className={`text-2xl transition-colors ${
                             star <= feedbackData.rating

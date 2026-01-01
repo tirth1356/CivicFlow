@@ -166,6 +166,28 @@ export const getTotalUserCount = async () => {
 };
 
 /**
+ * Add comment to an issue
+ */
+export const addIssueComment = async (issueId, commentData) => {
+  if (!isFirebaseAvailable) {
+    throw new Error('Firebase is not configured. Please set up Firebase first.');
+  }
+  
+  const issueRef = doc(db, 'issues', issueId);
+  const issueDoc = await getDocs(query(collection(db, 'issues'), where('__name__', '==', issueId)));
+  
+  if (!issueDoc.empty) {
+    const currentData = issueDoc.docs[0].data();
+    const currentComments = currentData.comments || [];
+    
+    await updateDoc(issueRef, {
+      comments: [...currentComments, commentData],
+      updatedAt: new Date().toISOString(),
+    });
+  }
+};
+
+/**
  * Get all feedback (admin)
  */
 export const getAllFeedback = (callback) => {

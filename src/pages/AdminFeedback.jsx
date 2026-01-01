@@ -49,9 +49,11 @@ const AdminFeedback = () => {
   };
 
   const getAverageRating = () => {
-    if (feedback.length === 0) return 0;
-    const total = feedback.reduce((sum, fb) => sum + fb.rating, 0);
-    return (total / feedback.length).toFixed(1);
+    if (feedback.length === 0) return '0.0';
+    const validRatings = feedback.filter(fb => fb.feedback && !isNaN(Number(fb.feedback.rating)));
+    if (validRatings.length === 0) return '0.0';
+    const total = validRatings.reduce((sum, fb) => sum + Number(fb.feedback.rating), 0);
+    return (total / validRatings.length).toFixed(1);
   };
 
   if (loading) {
@@ -193,8 +195,8 @@ const AdminFeedback = () => {
                       <div className="flex items-center space-x-4 text-sm text-gray-400 mb-3">
                         <div className="flex items-center space-x-1">
                           <Star className="w-4 h-4 text-yellow-400" />
-                          <span className="text-yellow-400 font-medium">{fb.rating}/5</span>
-                          <span className="text-yellow-400 ml-1">{getRatingStars(fb.rating)}</span>
+                          <span className="text-yellow-400 font-medium">{fb.feedback?.rating || 'N/A'}/5</span>
+                          <span className="text-yellow-400 ml-1">{fb.feedback?.rating ? getRatingStars(Number(fb.feedback.rating)) : '☆☆☆☆☆'}</span>
                         </div>
                         <span>•</span>
                         <div className="flex items-center space-x-1">
@@ -214,13 +216,13 @@ const AdminFeedback = () => {
                       </div>
                     </div>
                     <div className="px-3 py-1.5 bg-green-500/10 border border-green-500/20 text-green-400 rounded-xl text-sm font-medium">
-                      {fb.rating}/5
+                      {fb.feedback?.rating || 'N/A'}/5
                     </div>
                   </div>
                   
-                  {fb.comment && (
+                  {fb.feedback?.comment && (
                     <div className="bg-gray-800/30 rounded-xl p-4 mb-4">
-                      <p className="text-gray-300 italic leading-relaxed">"{fb.comment}"</p>
+                      <p className="text-gray-300 italic leading-relaxed">"{fb.feedback.comment}"</p>
                     </div>
                   )}
                   
