@@ -246,6 +246,15 @@ const StudentDashboard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate required fields
+    if (!formData.title.trim() || !formData.description.trim() || !formData.category || !formData.block) {
+      toast.error('Please fill in all required fields: Title, Description, Category, and Block', {
+        title: 'Missing Information',
+        duration: 5000
+      });
+      return;
+    }
+
     if (!currentUser?.emailVerified) {
       setModal({
         isOpen: true,
