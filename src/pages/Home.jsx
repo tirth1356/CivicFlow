@@ -187,7 +187,7 @@ const Home = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() =>
-                      currentUser ? navigate("/dashboard") : navigate("/auth")
+                      currentUser ? navigate("/dashboard") : navigate("/signup")
                     }
                     className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-sm sm:text-base lg:text-lg font-semibold shadow-lg transition-all duration-300"
                   >
