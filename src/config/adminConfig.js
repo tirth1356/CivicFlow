@@ -1,9 +1,6 @@
-// Admin configuration
-// Add your admin email addresses here
+
 export const ADMIN_EMAILS = [
-  '24bce288@nirmauni.ac.in',      // Replace with your actual admin emails
-  'tirth@example.com',      // Add your email here
-  'supervisor@example.com', // Add more admin emails as needed
+  '24bce288@nirmauni.ac.in',      // Replace with your actual admin emails 
 ];
 
 // Function to check if an email is admin

@@ -14,12 +14,10 @@ import {
 } from 'firebase/firestore';
 import { db } from './config';
 
-// Check if Firebase is available
+
 const isFirebaseAvailable = db !== null;
 
-/**
- * Create a new issue
- */
+
 export const createIssue = async (issueData) => {
   if (!isFirebaseAvailable) {
     throw new Error('Firebase is not configured. Please set up Firebase first.');
@@ -38,16 +36,12 @@ export const createIssue = async (issueData) => {
   return docRef.id;
 };
 
-/**
- * Submit a new issue (alias for createIssue)
- */
+
 export const submitIssue = async (issueData) => {
   return await createIssue(issueData);
 };
 
-/**
- * Get issues for a specific user (student)
- */
+
 export const getUserIssues = (userId, callback, errorCallback) => {
   if (!isFirebaseAvailable) {
     callback({ docs: [], empty: true });
@@ -83,14 +77,10 @@ export const getAllIssues = (callback) => {
   return onSnapshot(q, callback);
 };
 
-/**
- * Get issues (alias for getAllIssues)
- */
+
 export const getIssues = getAllIssues;
 
-/**
- * Get issues by block
- */
+
 export const getIssuesByBlock = (block, callback) => {
   if (!isFirebaseAvailable) {
     callback({ docs: [] });
@@ -105,9 +95,7 @@ export const getIssuesByBlock = (block, callback) => {
   return onSnapshot(q, callback);
 };
 
-/**
- * Update issue status
- */
+
 export const updateIssueStatus = async (issueId, status) => {
   if (!isFirebaseAvailable) {
     throw new Error('Firebase is not configured. Please set up Firebase first.');
@@ -118,9 +106,7 @@ export const updateIssueStatus = async (issueId, status) => {
   });
 };
 
-/**
- * Delete an issue
- */
+
 export const deleteIssue = async (issueId) => {
   if (!isFirebaseAvailable) {
     throw new Error('Firebase is not configured. Please set up Firebase first.');
@@ -128,9 +114,7 @@ export const deleteIssue = async (issueId) => {
   await deleteDoc(doc(db, 'issues', issueId));
 };
 
-/**
- * Submit feedback for an issue
- */
+
 export const submitFeedback = async (feedbackData) => {
   if (!isFirebaseAvailable) {
     throw new Error('Firebase is not configured. Please set up Firebase first.');
@@ -148,9 +132,7 @@ export const submitFeedback = async (feedbackData) => {
   });
 };
 
-/**
- * Get total user count from Authentication
- */
+
 export const getTotalUserCount = async () => {
   if (!isFirebaseAvailable) {
     return 42; // Fallback number for demo

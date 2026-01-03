@@ -33,6 +33,8 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
   const [selectedBlock, setSelectedBlock] = useState(null);
   const [selectedIssue, setSelectedIssue] = useState(null);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
+  const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
   const [filter, setFilter] = useState("all");
   const [ownershipFilter, setOwnershipFilter] = useState("all"); // "all", "mine", "others"
   const [searchQuery, setSearchQuery] = useState("");
@@ -170,15 +172,64 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
     }
   };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+  // Dynamic coordinate calculation for mobile
+  const getAdjustedCoordinates = (block) => {
+    if (!block.coordinates || containerDimensions.width === 0 || imageDimensions.width === 0) {
+      return block.coordinates || { x: 50, y: 50 };
+    }
+
+    const isMobile = window.innerWidth < 640;
+    if (!isMobile) {
+      return block.coordinates;
+    }
+
+    // For mobile with object-cover, calculate adjusted coordinates
+    const containerAspect = containerDimensions.width / containerDimensions.height;
+    const imageAspect = imageDimensions.width / imageDimensions.height;
+
+    let adjustedX = block.coordinates.x;
+    let adjustedY = block.coordinates.y;
+
+    if (imageAspect > containerAspect) {
+      // Image is wider than container - sides will be cropped
+      const scale = containerAspect / imageAspect;
+      const offset = (1 - scale) / 2;
+      adjustedX = (block.coordinates.x - (offset * 100)) / scale;
+    } else if (imageAspect < containerAspect) {
+      // Image is taller than container - top/bottom will be cropped
+      const scale = imageAspect / containerAspect;
+      const offset = (1 - scale) / 2;
+      adjustedY = (block.coordinates.y - (offset * 100)) / scale;
+    }
+
+    // Clamp coordinates to stay within bounds
+    adjustedX = Math.max(0, Math.min(100, adjustedX));
+    adjustedY = Math.max(0, Math.min(100, adjustedY));
+
+    return { x: adjustedX, y: adjustedY };
   };
+
+  // Handle image load and container resize
+  const handleImageLoad = (e) => {
+    const img = e.target;
+    setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
+    setMapLoaded(true);
+  };
+
+  useEffect(() => {
+    const updateContainerDimensions = () => {
+      const mapContainer = document.querySelector('[data-map-container]');
+      if (mapContainer) {
+        const rect = mapContainer.getBoundingClientRect();
+        setContainerDimensions({ width: rect.width, height: rect.height });
+      }
+    };
+
+    updateContainerDimensions();
+    window.addEventListener('resize', updateContainerDimensions);
+    
+    return () => window.removeEventListener('resize', updateContainerDimensions);
+  }, []);
 
   // Calculate overall stats
   const totalIssues = issues.length;
@@ -411,7 +462,10 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
           </div>
 
           {/* Map Area */}
-          <div className="relative w-full h-[400px] sm:h-[600px] lg:h-[800px] bg-gray-800/30 rounded-xl sm:rounded-2xl border border-gray-800/50 overflow-hidden mb-4 sm:mb-6">
+          <div 
+            data-map-container
+            className="relative w-full h-[400px] sm:h-[600px] lg:h-[800px] bg-gray-800/30 rounded-xl sm:rounded-2xl border border-gray-800/50 overflow-hidden mb-4 sm:mb-6"
+          >
             {/* Map Image */}
             <div className="absolute inset-0">
               {mapImageUrl ? (
@@ -419,8 +473,8 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
                   src={mapImageUrl}
                   alt="Campus Map"
                   className="w-full h-full object-cover sm:object-contain bg-gray-800/20"
-                  onLoad={() => setMapLoaded(true)}
-                  onError={() => setMapLoaded(true)}
+                  onLoad={handleImageLoad}
+                  onError={handleImageLoad}
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gray-800/20">
@@ -448,8 +502,9 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
                   return null;
                 }
 
-                const clampedX = Math.max(0, Math.min(100, block.coordinates.x));
-                const clampedY = Math.max(0, Math.min(100, block.coordinates.y));
+                const adjustedCoords = getAdjustedCoordinates(block);
+                const clampedX = Math.max(0, Math.min(100, adjustedCoords.x));
+                const clampedY = Math.max(0, Math.min(100, adjustedCoords.y));
 
                 console.log(`Rendering block ${block.name} at (${clampedX}%, ${clampedY}%) with ${block.issueCount} issues`);
 
