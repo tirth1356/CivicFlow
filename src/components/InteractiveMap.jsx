@@ -27,6 +27,17 @@ import {
   Hash,
 } from "lucide-react";
 
+// Helper function to format dates
+const formatDate = (timestamp) => {
+  if (!timestamp) return 'Unknown';
+  try {
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    return date.toLocaleDateString();
+  } catch (error) {
+    return 'Invalid Date';
+  }
+};
+
 const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
   const { currentUser, userRole } = useAuth();
   const [issues, setIssues] = useState([]);
@@ -244,7 +255,7 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
   ).length;
 
   return (
-    <div className="h-screen bg-gradient-to-b from-gray-900 to-gray-950 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-lg border-b border-gray-800/50">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
@@ -291,7 +302,7 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 h-full overflow-y-auto">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
         {/* Stats Overview */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
           <motion.div
@@ -520,8 +531,8 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
                     animate={{ scale: 1 }}
                     whileHover={{ scale: 1.1 }}
                     onClick={() => {
+                      console.log(`Clicked on ${block.name} with ${block.issueCount} issues`);
                       setSelectedBlock(block);
-                      // Auto-scroll to block details section
                       setTimeout(() => {
                         const element = document.querySelector('[data-block-details]');
                         if (element) {
