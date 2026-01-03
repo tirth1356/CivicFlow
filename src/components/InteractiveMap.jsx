@@ -418,7 +418,7 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
                 <img
                   src={mapImageUrl}
                   alt="Campus Map"
-                  className="w-full h-full object-contain bg-gray-800/20"
+                  className="w-full h-full object-cover sm:object-contain bg-gray-800/20"
                   onLoad={() => setMapLoaded(true)}
                   onError={() => setMapLoaded(true)}
                 />
