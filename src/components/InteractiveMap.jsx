@@ -39,23 +39,32 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
 
   // Fetch all issues for both students and admins (universal transparency)
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser) {
+      console.log('No current user, clearing issues');
+      setIssues([]);
+      return;
+    }
 
+    console.log('Current user found:', currentUser.uid, 'Role:', userRole);
+    
     // Always fetch all issues for transparency
     const unsubscribe = getAllIssues((snapshot) => {
       const issuesData = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      console.log('Fetched all issues for transparency:', issuesData);
+      console.log('Fetched all issues for transparency:', issuesData.length, 'issues');
       console.log('Available blocks:', campusBlocks.map(b => b.name));
       setIssues(issuesData);
+    }, (error) => {
+      console.error('Error fetching issues:', error);
+      setIssues([]);
     });
 
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, [currentUser]);
+  }, [currentUser, userRole]);
 
   // Calculate block statistics
   const blockStats = useMemo(() => {
@@ -409,7 +418,7 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
                 <img
                   src={mapImageUrl}
                   alt="Campus Map"
-                  className="w-full h-full object-cover bg-gray-800/20"
+                  className="w-full h-full object-contain bg-gray-800/20"
                   onLoad={() => setMapLoaded(true)}
                   onError={() => setMapLoaded(true)}
                 />
@@ -497,17 +506,6 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
                   </motion.div>
                 );
               })}
-          </div>
-
-          {/* View Full Image Button */}
-          <div className="flex justify-center mb-4 sm:mb-6">
-            <button
-              onClick={() => window.open(mapImageUrl, '_blank')}
-              className="px-4 sm:px-6 py-2 sm:py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center space-x-2 shadow-lg text-sm sm:text-base"
-            >
-              <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span>View Full Campus Map</span>
-            </button>
           </div>
 
           {/* Legend */}

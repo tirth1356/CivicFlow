@@ -89,13 +89,14 @@ const Analytics = () => {
     }, {});
 
     // Feedback stats
-    const avgRating = feedback.length > 0 
-      ? (feedback.reduce((sum, f) => sum + f.rating, 0) / feedback.length).toFixed(1)
-      : 0;
+    const validFeedback = feedback.filter(f => f.feedback && !isNaN(Number(f.feedback.rating)));
+    const avgRating = validFeedback.length > 0 
+      ? (validFeedback.reduce((sum, f) => sum + Number(f.feedback.rating), 0) / validFeedback.length).toFixed(1)
+      : '0.0';
 
-    const satisfactionRate = feedback.length > 0
-      ? ((feedback.filter(f => f.rating >= 4).length / feedback.length) * 100).toFixed(1)
-      : 0;
+    const satisfactionRate = validFeedback.length > 0
+      ? ((validFeedback.filter(f => Number(f.feedback.rating) >= 4).length / validFeedback.length) * 100).toFixed(1)
+      : '0.0';
 
     return {
       totalIssues,

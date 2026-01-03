@@ -190,7 +190,7 @@ const AdminFeedback = () => {
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex-1">
                       <h4 className="text-lg font-semibold text-white mb-2">
-                        {fb.issueTitle || 'Issue Title Not Available'}
+                        {fb.issueTitle || fb.title || 'Issue Title Not Available'}
                       </h4>
                       <div className="flex items-center space-x-4 text-sm text-gray-400 mb-3">
                         <div className="flex items-center space-x-1">

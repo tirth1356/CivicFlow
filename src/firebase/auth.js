@@ -70,6 +70,11 @@ export const signIn = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
+    // Check if email is verified for students (admins can bypass)
+    if (!user.emailVerified && !isAdminEmail(email)) {
+      throw new Error('Please verify your email before signing in. Check your inbox for the verification link.');
+    }
+
     // Determine role based on email
     const role = isAdminEmail(email) ? 'admin' : 'student';
 
@@ -79,6 +84,11 @@ export const signIn = async (email, password) => {
     return { user, role };
   } catch (error) {
     console.error('Login error:', error);
+    
+    // If it's our custom email verification error, preserve it
+    if (error.message && error.message.includes('verify your email')) {
+      throw error;
+    }
     
     // Convert Firebase error codes to user-friendly messages
     let errorMessage = 'Login failed. Please try again.';
@@ -274,6 +284,32 @@ export const updateUserProfile = async (updates) => {
   } catch (error) {
     console.error('Profile update error:', error);
     throw error;
+  }
+};
+
+/**
+ * Check if current user's email is verified
+ */
+export const isEmailVerified = () => {
+  if (!isFirebaseAvailable || !auth.currentUser) {
+    return false;
+  }
+  return auth.currentUser.emailVerified;
+};
+
+/**
+ * Send email verification to current user
+ */
+export const sendVerificationEmail = async () => {
+  if (!isFirebaseAvailable || !auth.currentUser) {
+    throw new Error('No user is currently signed in.');
+  }
+  
+  try {
+    await sendEmailVerification(auth.currentUser);
+  } catch (error) {
+    console.error('Email verification error:', error);
+    throw new Error('Failed to send verification email. Please try again.');
   }
 };
 
