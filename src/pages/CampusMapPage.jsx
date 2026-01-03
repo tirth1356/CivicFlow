@@ -12,9 +12,7 @@ const CampusMapPage = () => {
     <div className={`min-h-screen transition-colors duration-300 ${
       isDark ? 'bg-gray-950' : 'bg-gray-50'
     }`}>
-      <div className="pt-20">
-        <InteractiveMap />
-      </div>
+      <InteractiveMap />
     </div>
   );
 };
