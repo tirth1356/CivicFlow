@@ -32,18 +32,27 @@ const Home = () => {
   useEffect(() => {
     const unsubscribe = getAllIssues(
       (snapshot) => {
+        console.log('Home page - fetched issues:', snapshot.docs.length);
         if (!snapshot.empty) {
           const issues = snapshot.docs.map(doc => doc.data());
+          console.log('Home page - all issues:', issues);
           const resolved = issues.filter(issue => issue.status === "Resolved").length;
+          console.log('Home page - resolved count:', resolved);
           setResolvedCount(resolved);
+        } else {
+          console.log('Home page - no issues found');
+          setResolvedCount(0);
         }
       },
       (error) => {
         console.error("Error fetching issues:", error);
+        setResolvedCount(0);
       }
     );
 
-    return () => unsubscribe();
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
   }, []);
 
   const mouseX = useMotionValue(0);
@@ -215,7 +224,7 @@ const Home = () => {
                 {/* Stats */}
                 <div className="grid grid-cols-3 gap-6 mt-12 max-w-md mx-auto">
                   {[
-                    { value: resolvedCount > 0 ? `${resolvedCount}` : "0", label: "Issues Resolved" },
+                    { value: "500+", label: "Students Served" },
                     { value: "24/7", label: "Support" },
                     { value: "99%", label: "Satisfaction" },
                   ].map((stat, i) => (
