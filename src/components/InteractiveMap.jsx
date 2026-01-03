@@ -193,7 +193,7 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
   ).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950">
+    <div className="h-screen bg-gradient-to-b from-gray-900 to-gray-950 overflow-hidden">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-lg border-b border-gray-800/50">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
@@ -240,7 +240,7 @@ const InteractiveMap = ({ mapImageUrl = "/campus-map.jpg" }) => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 h-full overflow-y-auto">
         {/* Stats Overview */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
           <motion.div
