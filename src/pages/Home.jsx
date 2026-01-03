@@ -187,11 +187,11 @@ const Home = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() =>
-                      currentUser ? navigate("/dashboard") : navigate("/auth")
+                      currentUser ? navigate("/dashboard") : navigate("/signup")
                     }
                     className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-sm sm:text-base lg:text-lg font-semibold shadow-lg transition-all duration-300"
                   >
-                    {currentUser ? "Go to Dashboard" : "Get Started Free"}
+                    {currentUser ? "Go to Dashboard" : "Sign Up Free"}
                   </motion.button>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
@@ -200,14 +200,14 @@ const Home = () => {
                       if (currentUser) {
                         navigate("/map");
                       } else {
-                        navigate("/auth");
+                        navigate("/login");
                       }
                     }}
                     className="w-full sm:w-auto border-2 border-gray-600 hover:border-blue-500 px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-sm sm:text-base lg:text-lg font-semibold hover:bg-gray-800/50 backdrop-blur-sm transition-all duration-300"
                   >
                     <span className="flex items-center justify-center">
                       <MapPin className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
-                      {currentUser ? "View Campus Map" : "Login to View Map"}
+                      {currentUser ? "View Campus Map" : "Already a Member? Login"}
                     </span>
                   </motion.button>
                 </div>
