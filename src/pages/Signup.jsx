@@ -136,6 +136,19 @@ const Signup = () => {
               </motion.div>
             )}
 
+            {/* Email Verification Notice */}
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4">
+              <div className="flex items-start space-x-3">
+                <Mail className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="text-blue-400 font-medium text-sm mb-1">Email Verification Required</h4>
+                  <p className="text-blue-300 text-xs">
+                    After creating your account, check your inbox (and spam folder) for a verification email. You'll need to verify your email before accessing the platform.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Name Field */}
             <div className="space-y-2">
               <label className="flex items-center text-gray-300 text-sm font-medium">
